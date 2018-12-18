@@ -1,2 +1,2 @@
 # reviews
-adds review functionality
+Adds Amazon style review functionality
