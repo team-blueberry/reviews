@@ -10,7 +10,8 @@ let reviewSchema = mongoose.Schema({
   verified: Boolean,
   helpful: Number,
   profilepicture: String,
-  date: String
+  date: String,
+  images: Array
 });
 
 var Review = mongoose.model('Review', reviewSchema);
