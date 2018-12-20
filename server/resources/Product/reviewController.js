@@ -11,3 +11,14 @@ module.exports.retrieve = (req, res) => {
   })
 }
 
+module.exports.retrieveOne = (req, res) => {
+  let reviewNum = Number(req.params.substring(1));
+  Review.find({reviewId : reviewNum}).exec()
+  .then(reviews => {
+    res.send(reviews);
+  })
+  .catch(err => {
+    console.log(err)
+    res.sendStatus(500);
+  })
+}
