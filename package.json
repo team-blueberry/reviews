@@ -26,6 +26,8 @@
     "file-system": "^2.2.2",
     "mongoose": "^5.4.0",
     "morgan": "^1.9.1",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
   }
 }
