@@ -1,5 +1,4 @@
 const Review = require('./resources/Product/Review.js');
-const Image = require('./resources/Product/Image.js')
 const fs = require('fs');
 const db = require('./db/index.js')
 const imageObj = require('../data/imageObjectCreator.js')
