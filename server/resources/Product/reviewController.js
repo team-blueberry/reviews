@@ -16,7 +16,6 @@ module.exports.retrieve = (req, res) => {
 
 //This function sends back all reviews associated with a particular product page.
 module.exports.retrieveOne = (req, res) => { 
-  console.log(req.params)
   let reviewNum = Number(req.params.number.substring(1));
   Review.find({pageId : reviewNum}).exec()
   .then(reviews => {

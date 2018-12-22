@@ -9,7 +9,6 @@ const imageObj = require('../data/imageObjectCreator.js')
 var insertAllReviews = () => {
   imageObj((imgObject) => {
     var reviewData;
-    console.log(imgObject[1])
     fs.readFile('../data/review_data.json', 'utf8', (err, data) => {
       if (err) {
         throw err;
