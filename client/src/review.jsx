@@ -23,6 +23,7 @@ class Review extends React.Component {
     this.getReviews(5);
   }
 
+
   render() {
     return (
       <React.Fragment>
