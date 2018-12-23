@@ -1,23 +1,39 @@
 import React from 'react';
+import ReactDom from 'react-dom';
+import axios from 'axios';
 
-const propTypes = {};
 
-const defaultProps = {};
 
-export default class review extends React.Component {
+class Review extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      reviews: []
+    };
+  }
+
+  getReviews(listingNum) {
+    axios.get(`http://localhost:3013/listing/:${listingNum}`)
+    .then(({data}) => {
+      this.setState({reviews: data})
+    })
+
+  }
+
+  componentDidMount() {
+    var url = document.URL.substring(31);
+    this.getReviews(url);
   }
 
   render() {
     return (
       <React.Fragment>
         
+        
       </React.Fragment>
     );
   }
 }
 
- review.propTypes = propTypes;
- review.defaultProps = defaultProps;
+
+ReactDom.render(<Review/>, document.getElementById('review'));
