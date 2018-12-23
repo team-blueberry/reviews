@@ -8,7 +8,8 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../react-client/dist')));
-app.use('/', reviewsRouter)
+app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use('/listing', reviewsRouter)
+
 
 module.exports = app;
