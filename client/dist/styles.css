@@ -1,0 +1,21 @@
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box
+}
+
+body {
+  min-height: 100%
+}
+
+#averageReviewStarContainer {
+  width: 70px;
+  height: 50px;
+  float: left;
+  padding-right: 5px;
+}
+
+#averageReviewStarContainer img {
+  width: 20%;
+  height: auto;
+}
