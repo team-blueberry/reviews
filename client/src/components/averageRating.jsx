@@ -33,6 +33,7 @@ class AverageRating extends React.Component {
 
   roundAllRatings() {
     let roundedRatings = [];
+    let roundedRatingsCounter = {}
     this.props.reviews.forEach(review => {
       let decimal = review.stars - Math.floor(review.stars);
       if (decimal >= .5) {
@@ -41,7 +42,20 @@ class AverageRating extends React.Component {
         roundedRatings.push(Math.floor(review.stars))
       }
     })
-    return roundedRatings
+    roundedRatings.forEach(rating => {
+      if (roundedRatingsCounter[rating]) {
+        roundedRatingsCounter[rating]++
+      } else {
+        roundedRatingsCounter[rating] = 1
+      }
+    })
+    for (var i = 1; i < 6; i++) {
+      if (!roundedRatingsCounter[i]) {
+        roundedRatingsCounter[i] = 0;
+      }
+    }
+
+    return roundedRatingsCounter;
   }
 
 
