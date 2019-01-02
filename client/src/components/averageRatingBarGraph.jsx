@@ -24,7 +24,7 @@ class AverageRatingBarGraph extends React.Component {
             this.props.roundedRatings["2"],
             this.props.roundedRatings["1"]
           ],
-          backgroundColor: "orange"
+          backgroundColor: "#ffce00"
         },
         {
           label: "percentRemaining",
