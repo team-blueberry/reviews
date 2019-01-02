@@ -178,3 +178,8 @@ body {
   padding-right: 14px;
   border-bottom: solid 1px #969696
 }
+
+#reviewsPanel {
+  padding-top: 20px;
+  padding-left: 360px
+}
