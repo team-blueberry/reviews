@@ -5,18 +5,6 @@ class ImagesViewer extends React.Component {
     super(props)
   }
 
-  // getRandomImages() {
-  //   if (this.props.images) {
-  //     let shuffledImages = this.props.images.sort(() => Math.random() - .5)
-  //     shuffledImages = shuffledImages.slice(0,4)
-  //     return shuffledImages;
-  //   } else {
-  //     let temp = []
-  //     return temp
-  //   }
-    
-
-  // }  
 
   render() {
     return (
