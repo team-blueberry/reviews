@@ -33,7 +33,7 @@ class AverageRating extends React.Component {
 
   roundAllRatings() {
     let roundedRatings = [];
-    let roundedRatingsCounter = {}
+    let roundedRatingsCounter = {size: 0}
     this.props.reviews.forEach(review => {
       let decimal = review.stars - Math.floor(review.stars);
       if (decimal >= .5) {
@@ -48,6 +48,7 @@ class AverageRating extends React.Component {
       } else {
         roundedRatingsCounter[rating] = 1
       }
+      roundedRatingsCounter.size++
     })
     for (var i = 1; i < 6; i++) {
       if (!roundedRatingsCounter[i]) {
@@ -71,10 +72,13 @@ class AverageRating extends React.Component {
             {this.generateStars()[0]}
             {this.generateStars()[1]}
             {this.generateStars()[2]}
-          </div>
+        </div>
         <div id='averageStars'>{this.props.average} out of 5 stars</div>
+        <div id='chartContainer'>
         <AverageRatingBarGraph roundedRatings={this.roundAllRatings()}/>
-        
+        </div>
+        <div className='divider'>
+        </div>
       </React.Fragment>
     )
 
