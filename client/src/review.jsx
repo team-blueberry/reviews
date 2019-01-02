@@ -23,7 +23,7 @@ class Review extends React.Component {
   }
 
   getAverageStars() {
-    let average = (this.state.reviews.reduce((acc, review) => acc + review.stars, 0) / this.state.reviews.length).toFixed(2);
+    let average = (this.state.reviews.reduce((acc, review) => acc + review.stars, 0) / this.state.reviews.length).toFixed(1);
     this.setState({average: average})
   }
 
