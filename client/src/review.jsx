@@ -5,7 +5,8 @@ import flatten from 'array-flatten';
 
 import AverageRating from './components/averageRating.jsx';
 import ImagesViewer from './components/imagesViewer.jsx';
-import WordSearchButton from './components/wordSearchButtons.jsx'
+import WordSearchButton from './components/wordSearchButtons.jsx';
+import MainReviewsPanel from './components/mainReviewsPanel.jsx';
 
 class Review extends React.Component {
   constructor(props) {
@@ -18,16 +19,17 @@ class Review extends React.Component {
       imagePreview : [],
       randomWords: [],
       searchButton: null,
-      filteredReviews : []
+      filteredReviews : [],
+      sortByHelpful : true
     };
     this.handleSearchButton = this.handleSearchButton.bind(this)
+    this.handleSelectChange = this.handleSelectChange.bind(this)
   }
 
   getReviews(listingNum) {
     return axios
       .get(`http://localhost:3013/listing/:${listingNum}`)
       .then(({ data }) => {
-        data.sort(this.sortByMostHelpful);
         this.setState({ reviews: data });
       });
   }
@@ -89,15 +91,6 @@ class Review extends React.Component {
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
   }
   
-  sortByMostHelpful(a, b) {
-    if (a.helpful < b.helpful) {
-      return 1;
-    } else if (a.helpful > b.helpful) {
-      return -1;
-    }
-    return 0;
-  }
-
   filterReviews() {
     let filteredReviews = this.state.reviews.filter((review) => {
       return review.text.includes(this.state.searchButton)
@@ -140,11 +133,78 @@ class Review extends React.Component {
     })
   }
 
+  sortByMostHelpful(a, b) {
+    if (a.helpful < b.helpful) {
+      return 1;
+    } else if (a.helpful > b.helpful) {
+      return -1;
+    }
+    return 0;
+  }
+
+  sortByDate(a, b) {
+    return new Date(b.date) - new Date(a.date);
+  }
+
+
+  sortByChecker() {
+    if (this.state.filteredReviews.length) {
+      if (this.state.sortByHelpful) {
+        let temp = this.state.filteredReviews.slice()
+        temp.sort(this.sortByMostHelpful) 
+        this.setState({
+          filteredReviews: temp
+        })
+      } else if (this.state.sortByHelpful === false) {
+        let temp = this.state.filteredReviews.slice();
+        temp.sort(this.sortByDate)
+        this.setState({
+          filteredReviews: temp
+        })
+      }
+    } else {
+      if (this.state.sortByHelpful) {
+        let temp = this.state.reviews.slice()
+        temp.sort(this.sortByMostHelpful) 
+        this.setState({
+          reviews: temp
+        })
+      } else if (this.state.sortByHelpful === false) {
+        let temp = this.state.reviews.slice();
+        temp.sort(this.sortByDate)
+        this.setState({
+          reviews: temp
+        })
+      }
+    }
+    
+
+  }
+
+  handleSelectChange(e) {
+    if (e.target.value === 'Top Reviews') {
+      this.setState({
+        sortByHelpful : true
+      }, () => {
+        this.sortByChecker()
+      })
+    } else {
+      this.setState({
+        sortByHelpful : false
+      }, () => {
+        this.sortByChecker()
+      })
+    }
+  }
+
   componentDidMount() {
     let url = document.URL.substring(23);
     this.getReviews(url)
       .then(() => {
         this.getAverageStars();
+      })
+      .then(() => {
+        this.sortByChecker()
       })
       .then(() => {
         this.calculateNeededStars();
@@ -179,9 +239,14 @@ class Review extends React.Component {
             <div id='wordSearchButtons'>
               <WordSearchButton words={this.state.randomWords} handleSearchButton={this.handleSearchButton}/>
             </div>
+
           </div>
 
+
           
+        </div>
+        <div id='reviewsPanel'>
+          <MainReviewsPanel reviews={this.state.filteredReviews.length ? this.state.filteredReviews : this.state.reviews} handleSelectChange={this.handleSelectChange}/>
         </div>
       </React.Fragment>
     );
