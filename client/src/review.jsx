@@ -1,15 +1,15 @@
-import React from 'react';
-import ReactDom from 'react-dom';
-import axios from 'axios';
+import React from "react";
+import ReactDom from "react-dom";
+import axios from "axios";
 
-import AverageRating from './components/averageRating.jsx'
+import AverageRating from "./components/averageRating.jsx";
 
 class Review extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       reviews: [],
-      average: '',
+      average: "",
       neededStars: []
     };
   }
@@ -23,8 +23,11 @@ class Review extends React.Component {
   }
 
   getAverageStars() {
-    let average = (this.state.reviews.reduce((acc, review) => acc + review.stars, 0) / this.state.reviews.length).toFixed(1);
-    this.setState({average: average})
+    let average = (
+      this.state.reviews.reduce((acc, review) => acc + review.stars, 0) /
+      this.state.reviews.length
+    ).toFixed(1);
+    this.setState({ average: average });
   }
 
   calculateNeededStars() {
@@ -33,36 +36,39 @@ class Review extends React.Component {
     let decimals = average - filled;
     var halfStars = false;
     let empty = 5 - filled;
-    if (decimals > .5) {
+    if (decimals > 0.5) {
       halfStars = true;
       empty = empty - 1;
     }
     this.setState({
-      neededStars : [filled, halfStars, empty]
-    })
+      neededStars: [filled, halfStars, empty]
+    });
   }
 
   componentDidMount() {
     var url = document.URL.substring(31);
     this.getReviews(30)
-    .then(() => {
-      this.getAverageStars()
-    })
-    .then(() => {
-      this.calculateNeededStars()
-    })
+      .then(() => {
+        this.getAverageStars();
+      })
+      .then(() => {
+        this.calculateNeededStars();
+      });
   }
-
 
   render() {
     return (
       <React.Fragment>
         <div id="reviewsMedly">
-          <AverageRating reviews={this.state.reviews} average={this.state.average} neededStars={this.state.neededStars}/>
+          <AverageRating
+            reviews={this.state.reviews}
+            average={this.state.average}
+            neededStars={this.state.neededStars}
+          />
         </div>
       </React.Fragment>
     );
   }
 }
 
-ReactDom.render(<Review />, document.getElementById('review'));
+ReactDom.render(<Review />, document.getElementById("review"));
