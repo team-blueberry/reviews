@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDom from "react-dom";
 import axios from "axios";
+import flatten from 'array-flatten';
 
 import AverageRating from "./components/averageRating.jsx";
+import ImagesViewer from "./components/imagesViewer.jsx"
 
 class Review extends React.Component {
   constructor(props) {
@@ -10,7 +12,8 @@ class Review extends React.Component {
     this.state = {
       reviews: [],
       average: "",
-      neededStars: []
+      neededStars: [],
+      images: []
     };
   }
 
@@ -28,6 +31,19 @@ class Review extends React.Component {
       this.state.reviews.length
     ).toFixed(1);
     this.setState({ average: average });
+  }
+
+  getAllImages() {
+    let allImages = [];
+    this.state.reviews.forEach(review => {
+      if(review.images) {
+        allImages.push(review.images)
+      }
+    })
+    allImages = flatten(allImages);
+    this.setState({
+      images: allImages
+    })
   }
 
   calculateNeededStars() {
@@ -53,18 +69,31 @@ class Review extends React.Component {
       })
       .then(() => {
         this.calculateNeededStars();
+      })
+      .then(() => {
+        this.getAllImages()
       });
   }
 
   render() {
     return (
       <React.Fragment>
+        <div className='divider'/>
         <div id="reviewsMedly">
+          <div id="averageRating">
           <AverageRating
             reviews={this.state.reviews}
             average={this.state.average}
             neededStars={this.state.neededStars}
           />
+          </div>
+          <div id="mainReviewsPane">
+            <div id='imagesViewer'>
+              <ImagesViewer images={this.state.images}/>
+            </div>
+          </div>
+
+          
         </div>
       </React.Fragment>
     );
