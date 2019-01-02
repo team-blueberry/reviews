@@ -149,7 +149,7 @@ body {
 #seeMoreImages {
   color: rgb(0, 102, 192);
   cursor: pointer;
-  font-size: 13;
+  font-size: 13px;
   text-decoration-color: rgb(0, 102, 192);
   text-decoration-line: none;
   text-decoration-style: solid;
