@@ -109,3 +109,49 @@ body {
 .averageReviewsContainer {
   font-family: Arial, sans-serif
 }
+#reviewsMedly {
+  font-family: Arial, sans-serif
+}
+#averageRating {
+  border-right: 30px;
+  float: left
+}
+
+#imagesViewer {
+  float: left;
+  padding-left: 30px
+}
+
+.displayedImage {
+  width: 22.5%;
+  height: 120px;
+  border-image-slice: 100%;
+  border-image-repeat: stretch;
+  cursor: pointer;
+  border-image-width: 1px;
+  box-sizing: border-box;
+  padding: 2px;
+}
+
+#mainReviewsPane {
+  box-sizing: border-box;
+  display: block;
+  float: left;
+  max-width: 680px;
+  min-height: 1px;
+  overflow-x: visible;
+  overflow-y: visible;
+  position: relative;
+  width: 90.5%;
+  padding-left: 30px;
+}
+
+#seeMoreImages {
+  color: rgb(0, 102, 192);
+  cursor: pointer;
+  font-size: 13;
+  text-decoration-color: rgb(0, 102, 192);
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  line-height: 19px;
+}
