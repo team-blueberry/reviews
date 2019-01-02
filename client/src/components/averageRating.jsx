@@ -59,6 +59,14 @@ class AverageRating extends React.Component {
     return roundedRatingsCounter;
   }
 
+  toggleButton(e) {
+    if (document.getElementById('leaveReviewButton').style.borderStyle === 'inset') {
+      document.getElementById('leaveReviewButton').style.borderStyle = 'outset'
+    } else {
+      document.getElementById('leaveReviewButton').style.borderStyle = 'inset'
+    }
+  }
+
 
 
   render() {
@@ -67,6 +75,7 @@ class AverageRating extends React.Component {
 
     return (
       <React.Fragment>
+        <div className="averageReviewsContainer">
         <div id='numReviews'>{this.props.reviews.length} customer reviews</div>
         <div id="averageReviewStarContainer">
             {this.generateStars()[0]}
@@ -77,7 +86,17 @@ class AverageRating extends React.Component {
         <div id='chartContainer'>
         <AverageRatingBarGraph roundedRatings={this.roundAllRatings()}/>
         </div>
-        <div className='divider'>
+        <div className='divider'/>
+        <div id='averageReviewsStaticTextBold'>
+          Review this product
+        </div>
+        <div id='averageReviewsStaticText'>
+          Share your thoughts with other customers
+        </div>
+        <div>
+          <button id="leaveReviewButton" type='button' onMouseUp={this.toggleButton} onMouseDown={this.toggleButton}>Write a customer review</button>
+        </div>
+        <div className='divider' id="bottom"/>
         </div>
       </React.Fragment>
     )
