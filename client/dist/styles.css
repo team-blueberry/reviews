@@ -23,6 +23,9 @@ body {
   box-sizing: border-box;
   overflow: hidden;
 }
+#bottom {
+  margin-top: 26px;
+}
 
 #numReviews {
   font-weight: 700;
@@ -38,10 +41,67 @@ body {
 }
 #averageStars {
   padding-top: 10px;
-  height: 30px
+  height: 30px;
+  font-size: 13px;
+  line-height: 19px
 }
 
 #averageReviewStarContainer img {
   width: 20%;
   height: auto;
+}
+
+#averageReviewsStaticTextBold {
+  margin-bottom: 4px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 19px;
+  padding-bottom: 4px;
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+  color: #111;
+}
+
+#averageReviewsStaticText {
+  margin-bottom: 18px;
+  font-size: 13px;
+  line-height: 19px;
+  padding-bottom: 4px;
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+  display: block;
+  color: #111;
+}
+#leaveReviewButton {
+  color: #111;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  display: block;
+  font-size: 13px;
+  line-height: 29px;
+  margin: 0;
+  outline: 0;
+  padding: 0 10px 0 11px;
+  text-align: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px;
+  display: inline-block;
+  border-color: #ADB1B8 #A2A6AC #8D9096;
+  background: #e7e9ec;
+  width: 277px;
+  height: 29px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.6) inset;
+  overflow: hidden;
+  background: linear-gradient(to bottom,#f7f8fa,#e7e9ec);
+  border-style: outset
+}
+
+
+.averageReviewsContainer {
+  font-family: Arial, sans-serif
 }
