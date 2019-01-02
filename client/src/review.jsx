@@ -148,35 +148,26 @@ class Review extends React.Component {
 
 
   sortByChecker() {
-    if (this.state.filteredReviews.length) {
       if (this.state.sortByHelpful) {
         let temp = this.state.filteredReviews.slice()
+        let temp2 = this.state.reviews.slice()
         temp.sort(this.sortByMostHelpful) 
+        temp2.sort(this.sortByMostHelpful)
         this.setState({
-          filteredReviews: temp
+          filteredReviews: temp,
+          reviews : temp2
         })
       } else if (this.state.sortByHelpful === false) {
         let temp = this.state.filteredReviews.slice();
+        let temp2 = this.state.reviews.slice()
         temp.sort(this.sortByDate)
+        temp2.sort(this.sortByDate)
         this.setState({
-          filteredReviews: temp
+          filteredReviews: temp,
+          reviews: temp2
         })
       }
-    } else {
-      if (this.state.sortByHelpful) {
-        let temp = this.state.reviews.slice()
-        temp.sort(this.sortByMostHelpful) 
-        this.setState({
-          reviews: temp
-        })
-      } else if (this.state.sortByHelpful === false) {
-        let temp = this.state.reviews.slice();
-        temp.sort(this.sortByDate)
-        this.setState({
-          reviews: temp
-        })
-      }
-    }
+
     
 
   }
