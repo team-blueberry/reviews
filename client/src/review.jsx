@@ -4,7 +4,8 @@ import axios from "axios";
 import flatten from 'array-flatten';
 
 import AverageRating from "./components/averageRating.jsx";
-import ImagesViewer from "./components/imagesViewer.jsx"
+import ImagesViewer from "./components/imagesViewer.jsx";
+import WordSearchButton from './components/wordSearchButtons.jsx'
 
 class Review extends React.Component {
   constructor(props) {
