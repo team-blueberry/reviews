@@ -285,7 +285,7 @@ class Review extends React.Component {
           </div>
           <div id='mainReviewsPane'>
             <div id='imagesViewer'>
-              <ImagesViewer images={this.state.imagePreview}/>
+              <ImagesViewer selectedImages={this.state.imagePreview} allImages={this.state.images}/>
             </div>
             <div id='wordSearchButtons'>
               <WordSearchButton words={this.state.randomWords} handleSearchButton={this.handleSearchButton}/>
