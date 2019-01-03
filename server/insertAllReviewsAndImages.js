@@ -28,7 +28,7 @@ var insertAllReviews = () => {
             pageId: review.pageId,
             date: review.date,
             images: imgObject[review.reviewId.toString()],
-            profilepicture: 'https://picsum.photos/40/40/?random'
+            profilepicture: review.profilepicture
           }, {upsert: true}).exec((err) => {
             if (err) {
               console.log(err)
