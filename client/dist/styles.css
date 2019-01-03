@@ -5,7 +5,8 @@
 }
 
 body {
-  min-height: 100%
+  min-height: 100%;
+  font-family: Arial, sans-serif
 }
 
 #chartContainer {
@@ -33,6 +34,18 @@ body {
   font-weight: 700;
   font-size: 21px
 }
+
+#reviewStarContainer {
+  width: 70px;
+  height: 30px;
+  box-sizing: border-box
+}
+#reviewStarContainer img{
+  width: 20%;
+  height: auto;
+  padding-bottom: 5.5px;
+}
+
 
 #averageReviewStarContainer {
   padding-top: 10px;
@@ -112,6 +125,7 @@ body {
 #reviewsMedly {
   font-family: Arial, sans-serif;
   overflow: hidden;
+  position: relative
 }
 #averageRating {
   border-right: 30px;
@@ -122,7 +136,8 @@ body {
 #imagesViewer {
   padding-left: 30px;
   overflow: hidden;
-  display: inline-block
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .displayedImage {
@@ -138,14 +153,15 @@ body {
 
 #mainReviewsPane {
   box-sizing: border-box;
-  display: block;
-  float: left;
+  display: inline-block;
+  /* float: left; */
   max-width: 680px;
   min-height: 1px;
   overflow: hidden;
   position: relative;
   width: 90.5%;
   padding-left: 30px;
+  white-space: nowrap;
 }
 
 #seeMoreImages {
@@ -181,5 +197,112 @@ body {
 
 #reviewsPanel {
   padding-top: 20px;
-  padding-left: 360px
+  padding-left: 360px;
+  overflow: hidden;
+  width : 1000px
+}
+
+#filterButton {
+  color: #0066c0;
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: 19px;
+  padding-left: 5px
+}
+
+#reviewStarContainer {
+  float: left;
+  padding-right: 10px;
+  padding-bottom: 8px
+}
+
+#reviewTitle {
+  cursor: pointer;
+  color: rgb(17,17,17);
+  font-weight: 700;
+  font-size: 13px;
+  overflow-wrap: break-word;
+  text-decoration-color: rgb(17,17,17);
+  text-decoration-style: solid;
+  font-family: Arial, sans-serif
+}
+
+#reviewAuthor {
+  float: left;
+  position: absolute
+}
+
+#verified {
+  color: rgb(196, 85, 0);
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  overflow-wrap: break-word;
+  border-top: 3px;
+  border-bottom: 3px;
+}
+
+#reviewText {
+  overflow-wrap: break-word;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+  color: rgb(17,17,17);
+  line-height: 19px;
+  white-space: normal
+}
+
+#helpfulCount {
+  color: rgb(118, 118, 118);
+  font-size: 13px;
+  line-height: 19px;
+  text-size-adjust: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px
+
+}
+
+.verticalSeperator {
+  display: inline-block;
+  margin: -2px .67375em 0;
+  width: 1px;
+  background-color: #ddd;
+  line-height: 0;
+  height : 14px;
+  vertical-align: middle
+}
+
+
+
+.reviewFooterStatic {
+  font-weight: 400;
+  font-style: normal;
+  text-transform: none;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 19px;
+  cursor: pointer;
+  color: #555;
+}
+
+#profileInfo {
+  padding-top: 25px;
+  padding-bottom: 0
+}
+
+#profileInfo img {
+  border-radius: 50%;
+  width: 34px;
+}
+
+#fullName {
+  padding-left : 13px
+}
+
+#review {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#reviewImageContainer {
+  white-space: normal
 }
