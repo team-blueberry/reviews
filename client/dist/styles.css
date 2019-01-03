@@ -314,3 +314,9 @@ body {
   max-width: 400px;
   width: 350px;
 }
+
+.modalImage {
+  width: 128px;
+  height: 128px;
+  margin: 5px
+}
