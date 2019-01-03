@@ -320,3 +320,13 @@ body {
   height: 128px;
   margin: 5px
 }
+
+#seeMoreReviews {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-weight: 700
+}
+
+#reviewButton {
+  color: grey
+}
