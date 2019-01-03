@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
-const mongoUri = 'mongodb://localhost:27017/review'
+let mongoUri = ''
+
+if (process.env.mongo_uri) {
+  mongoUri = process.env.mongo_uri
+} else {
+  mongoUri = ('mongodb://localhost:27017/review')
+}
 
 mongoose.connect(mongoUri, {useNewUrlParser: true}, (err) => {
   if (err) {
