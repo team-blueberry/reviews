@@ -31,7 +31,7 @@ class Review extends React.Component {
 
   getReviews(listingNum) {
     return axios
-      .get(`http://localhost:3013/listing/:${listingNum}`)
+      .get(`/listing/:${listingNum}`)
       .then(({ data }) => {
         this.setState({ reviews: data });
       });
