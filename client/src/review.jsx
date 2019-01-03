@@ -20,10 +20,13 @@ class Review extends React.Component {
       randomWords: [],
       searchButton: null,
       filteredReviews : [],
-      sortByHelpful : true
+      sortByHelpful : true,
     };
     this.handleSearchButton = this.handleSearchButton.bind(this)
     this.handleSelectChange = this.handleSelectChange.bind(this)
+    this.clearFilter = this.clearFilter.bind(this)
+    this.generateStars = this.generateStars.bind(this)
+    this.calculateNeededStars = this.calculateNeededStars.bind(this)
   }
 
   getReviews(listingNum) {
@@ -33,6 +36,8 @@ class Review extends React.Component {
         this.setState({ reviews: data });
       });
   }
+
+
 
   getAverageStars() {
     let average = (
@@ -70,6 +75,8 @@ class Review extends React.Component {
     }
   }
 
+
+
   calculateNeededStars() {
     let average = Number(this.state.average);
     let filled = Math.floor(average);
@@ -80,9 +87,11 @@ class Review extends React.Component {
       halfStars = true;
       empty = empty - 1;
     }
-    this.setState({
-      neededStars: [filled, halfStars, empty]
-    });
+    // this.setState({
+    //   neededStars: [filled, halfStars, empty]
+    // });
+
+    return [filled, halfStars, empty]
   }
 
   getRandomIntInclusive(min, max) {
@@ -188,6 +197,56 @@ class Review extends React.Component {
     }
   }
 
+  clearFilter(e) {
+    e.preventDefault()
+    this.setState({filteredReviews : []})
+  }
+
+
+  generateStars(starsArr) {
+    let filledArr = [];
+    for (var i = 0; i < starsArr[0]; i++) {
+      filledArr.push(i);
+    }
+    let filledStars = filledArr.map(num => {
+      return (
+        <img
+          key={num}
+          className="star"
+          src="https://visualpharm.com/assets/445/Star%20Filled-595b40b65ba036ed117d408e.svg"
+          alt=""
+        />
+      );
+    });
+    let halfArr;
+    if (starsArr[1] === true) {
+      halfArr = (
+        <img
+          className="star"
+          src="https://visualpharm.com/assets/247/Star%20Half-595b40b85ba036ed117dab5e.svg"
+          alt=""
+        />
+      );
+    }
+
+    let emptyArr = [];
+    for (var i = 0; i < starsArr[2]; i++) {
+      emptyArr.push(i);
+    }
+    let emptyStars = emptyArr.map(num => {
+      return (
+        <img
+          key={num}
+          className="star"
+          src="https://visualpharm.com/assets/797/Christmas%20Star-595b40b75ba036ed117d58dc.svg"
+          alt=""
+        />
+      );
+    });
+    return [filledStars, halfArr, emptyStars];
+  }
+
+
   componentDidMount() {
     let url = document.URL.substring(23);
     this.getReviews(url)
@@ -197,9 +256,9 @@ class Review extends React.Component {
       .then(() => {
         this.sortByChecker()
       })
-      .then(() => {
-        this.calculateNeededStars();
-      })
+      // .then(() => {
+      //   this.calculateNeededStars();
+      // })
       .then(() => {
         this.getAllImages()
       })
@@ -220,7 +279,8 @@ class Review extends React.Component {
           <AverageRating
             reviews={this.state.reviews}
             average={this.state.average}
-            neededStars={this.state.neededStars}
+            neededStars={this.calculateNeededStars}
+            generateStars={this.generateStars}
           />
           </div>
           <div id='mainReviewsPane'>
@@ -237,7 +297,7 @@ class Review extends React.Component {
           
         </div>
         <div id='reviewsPanel'>
-          <MainReviewsPanel reviews={this.state.filteredReviews.length ? this.state.filteredReviews : this.state.reviews} handleSelectChange={this.handleSelectChange}/>
+          <MainReviewsPanel generateStars={this.generateStars} reviews={this.state.filteredReviews.length ? this.state.filteredReviews : this.state.reviews} filtered={!!this.state.filteredReviews.length} handleSelectChange={this.handleSelectChange} clearFilter={this.clearFilter}/>
         </div>
       </React.Fragment>
     );
