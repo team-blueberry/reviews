@@ -11,7 +11,8 @@ let reviewSchema = mongoose.Schema({
   helpful: Number,
   profilepicture: String,
   date: String,
-  images: Array
+  images: Array,
+  name: String
 });
 
 var Review = mongoose.model('Review', reviewSchema);

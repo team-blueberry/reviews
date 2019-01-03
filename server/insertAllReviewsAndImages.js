@@ -9,7 +9,7 @@ const imageObj = require('../data/imageObjectCreator.js')
 var insertAllReviews = () => {
   imageObj((imgObject) => {
     var reviewData;
-    fs.readFile('../data/review_data.json', 'utf8', (err, data) => {
+    fs.readFile('../data/Reviews.json', 'utf8', (err, data) => {
       if (err) {
         throw err;
       } else {
@@ -21,6 +21,7 @@ var insertAllReviews = () => {
             stars: review.stars,
             verified: review.verified,
             username: review.username,
+            name: review.name,
             title: review.title,
             text: review.text,
             helpful: review.helpful,

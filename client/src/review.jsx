@@ -5,7 +5,8 @@ import flatten from 'array-flatten';
 
 import AverageRating from './components/averageRating.jsx';
 import ImagesViewer from './components/imagesViewer.jsx';
-import WordSearchButton from './components/wordSearchButtons.jsx'
+import WordSearchButton from './components/wordSearchButtons.jsx';
+import MainReviewsPanel from './components/mainReviewsPanel.jsx';
 
 class Review extends React.Component {
   constructor(props) {
@@ -18,19 +19,25 @@ class Review extends React.Component {
       imagePreview : [],
       randomWords: [],
       searchButton: null,
-      filteredReviews : []
+      filteredReviews : [],
+      sortByHelpful : true,
     };
     this.handleSearchButton = this.handleSearchButton.bind(this)
+    this.handleSelectChange = this.handleSelectChange.bind(this)
+    this.clearFilter = this.clearFilter.bind(this)
+    this.generateStars = this.generateStars.bind(this)
+    this.calculateNeededStars = this.calculateNeededStars.bind(this)
   }
 
   getReviews(listingNum) {
     return axios
       .get(`http://localhost:3013/listing/:${listingNum}`)
       .then(({ data }) => {
-        data.sort(this.sortByMostHelpful);
         this.setState({ reviews: data });
       });
   }
+
+
 
   getAverageStars() {
     let average = (
@@ -68,6 +75,8 @@ class Review extends React.Component {
     }
   }
 
+
+
   calculateNeededStars() {
     let average = Number(this.state.average);
     let filled = Math.floor(average);
@@ -78,9 +87,11 @@ class Review extends React.Component {
       halfStars = true;
       empty = empty - 1;
     }
-    this.setState({
-      neededStars: [filled, halfStars, empty]
-    });
+    // this.setState({
+    //   neededStars: [filled, halfStars, empty]
+    // });
+
+    return [filled, halfStars, empty]
   }
 
   getRandomIntInclusive(min, max) {
@@ -89,15 +100,6 @@ class Review extends React.Component {
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
   }
   
-  sortByMostHelpful(a, b) {
-    if (a.helpful < b.helpful) {
-      return 1;
-    } else if (a.helpful > b.helpful) {
-      return -1;
-    }
-    return 0;
-  }
-
   filterReviews() {
     let filteredReviews = this.state.reviews.filter((review) => {
       return review.text.includes(this.state.searchButton)
@@ -140,6 +142,111 @@ class Review extends React.Component {
     })
   }
 
+  sortByMostHelpful(a, b) {
+    if (a.helpful < b.helpful) {
+      return 1;
+    } else if (a.helpful > b.helpful) {
+      return -1;
+    }
+    return 0;
+  }
+
+  sortByDate(a, b) {
+    return new Date(b.date) - new Date(a.date);
+  }
+
+
+  sortByChecker() {
+      if (this.state.sortByHelpful) {
+        let temp = this.state.filteredReviews.slice()
+        let temp2 = this.state.reviews.slice()
+        temp.sort(this.sortByMostHelpful) 
+        temp2.sort(this.sortByMostHelpful)
+        this.setState({
+          filteredReviews: temp,
+          reviews : temp2
+        })
+      } else if (this.state.sortByHelpful === false) {
+        let temp = this.state.filteredReviews.slice();
+        let temp2 = this.state.reviews.slice()
+        temp.sort(this.sortByDate)
+        temp2.sort(this.sortByDate)
+        this.setState({
+          filteredReviews: temp,
+          reviews: temp2
+        })
+      }
+
+    
+
+  }
+
+  handleSelectChange(e) {
+    if (e.target.value === 'Top Reviews') {
+      this.setState({
+        sortByHelpful : true
+      }, () => {
+        this.sortByChecker()
+      })
+    } else {
+      this.setState({
+        sortByHelpful : false
+      }, () => {
+        this.sortByChecker()
+      })
+    }
+  }
+
+  clearFilter(e) {
+    e.preventDefault()
+    this.setState({filteredReviews : []})
+  }
+
+
+  generateStars(starsArr) {
+    let filledArr = [];
+    for (var i = 0; i < starsArr[0]; i++) {
+      filledArr.push(i);
+    }
+    let filledStars = filledArr.map(num => {
+      return (
+        <img
+          key={num}
+          className="star"
+          src="https://visualpharm.com/assets/445/Star%20Filled-595b40b65ba036ed117d408e.svg"
+          alt=""
+        />
+      );
+    });
+    let halfArr;
+    if (starsArr[1] === true) {
+      halfArr = (
+        <img
+          className="star"
+          src="https://visualpharm.com/assets/247/Star%20Half-595b40b85ba036ed117dab5e.svg"
+          alt=""
+        />
+      );
+    }
+
+    let emptyArr = [];
+    for (var i = 0; i < starsArr[2]; i++) {
+      emptyArr.push(i);
+    }
+    let emptyStars = emptyArr.map(num => {
+      return (
+        <img
+          key={num}
+          className="star"
+          src="https://visualpharm.com/assets/797/Christmas%20Star-595b40b75ba036ed117d58dc.svg"
+          alt=""
+        />
+      );
+    });
+    return [filledStars, halfArr, emptyStars];
+  }
+
+
   componentDidMount() {
     let url = document.URL.substring(23);
     this.getReviews(url)
@@ -147,8 +254,11 @@ class Review extends React.Component {
         this.getAverageStars();
       })
       .then(() => {
-        this.calculateNeededStars();
+        this.sortByChecker()
       })
+      // .then(() => {
+      //   this.calculateNeededStars();
+      // })
       .then(() => {
         this.getAllImages()
       })
@@ -169,7 +279,8 @@ class Review extends React.Component {
           <AverageRating
             reviews={this.state.reviews}
             average={this.state.average}
-            neededStars={this.state.neededStars}
+            neededStars={this.calculateNeededStars}
+            generateStars={this.generateStars}
           />
           </div>
           <div id='mainReviewsPane'>
@@ -179,9 +290,14 @@ class Review extends React.Component {
             <div id='wordSearchButtons'>
               <WordSearchButton words={this.state.randomWords} handleSearchButton={this.handleSearchButton}/>
             </div>
+
           </div>
 
+
           
+        </div>
+        <div id='reviewsPanel'>
+          <MainReviewsPanel generateStars={this.generateStars} reviews={this.state.filteredReviews.length ? this.state.filteredReviews : this.state.reviews} filtered={!!this.state.filteredReviews.length} handleSelectChange={this.handleSelectChange} clearFilter={this.clearFilter}/>
         </div>
       </React.Fragment>
     );

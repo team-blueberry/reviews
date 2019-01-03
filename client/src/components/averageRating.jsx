@@ -7,48 +7,48 @@ class AverageRating extends React.Component {
     this.state = {};
   }
 
-  generateStars() {
-    let filledArr = [];
-    for (var i = 0; i < this.props.neededStars[0]; i++) {
-      filledArr.push(i);
-    }
-    let filledStars = filledArr.map(num => {
-      return (
-        <img
-          key={num}
-          className="star"
-          src="https://visualpharm.com/assets/445/Star%20Filled-595b40b65ba036ed117d408e.svg"
-          alt=""
-        />
-      );
-    });
-    let halfArr;
-    if (this.props.neededStars[1] === true) {
-      halfArr = (
-        <img
-          className="star"
-          src="https://visualpharm.com/assets/247/Star%20Half-595b40b85ba036ed117dab5e.svg"
-          alt=""
-        />
-      );
-    }
+  // generateStars() {
+  //   let filledArr = [];
+  //   for (var i = 0; i < this.props.neededStars[0]; i++) {
+  //     filledArr.push(i);
+  //   }
+  //   let filledStars = filledArr.map(num => {
+  //     return (
+  //       <img
+  //         key={num}
+  //         className="star"
+  //         src="https://visualpharm.com/assets/445/Star%20Filled-595b40b65ba036ed117d408e.svg"
+  //         alt=""
+  //       />
+  //     );
+  //   });
+  //   let halfArr;
+  //   if (this.props.neededStars[1] === true) {
+  //     halfArr = (
+  //       <img
+  //         className="star"
+  //         src="https://visualpharm.com/assets/247/Star%20Half-595b40b85ba036ed117dab5e.svg"
+  //         alt=""
+  //       />
+  //     );
+  //   }
 
-    let emptyArr = [];
-    for (var i = 0; i < this.props.neededStars[2]; i++) {
-      emptyArr.push(i);
-    }
-    let emptyStars = emptyArr.map(num => {
-      return (
-        <img
-          key={num}
-          className="star"
-          src="https://visualpharm.com/assets/797/Christmas%20Star-595b40b75ba036ed117d58dc.svg"
-          alt=""
-        />
-      );
-    });
-    return [filledStars, halfArr, emptyStars];
-  }
+  //   let emptyArr = [];
+  //   for (var i = 0; i < this.props.neededStars[2]; i++) {
+  //     emptyArr.push(i);
+  //   }
+  //   let emptyStars = emptyArr.map(num => {
+  //     return (
+  //       <img
+  //         key={num}
+  //         className="star"
+  //         src="https://visualpharm.com/assets/797/Christmas%20Star-595b40b75ba036ed117d58dc.svg"
+  //         alt=""
+  //       />
+  //     );
+  //   });
+  //   return [filledStars, halfArr, emptyStars];
+  // }
 
   roundAllRatings() {
     let roundedRatings = [];
@@ -96,9 +96,9 @@ class AverageRating extends React.Component {
             {this.props.reviews.length} customer reviews
           </div>
           <div id="averageReviewStarContainer">
-            {this.generateStars()[0]}
-            {this.generateStars()[1]}
-            {this.generateStars()[2]}
+            {this.props.generateStars(this.props.neededStars())[0]}
+            {this.props.generateStars(this.props.neededStars())[1]}
+            {this.props.generateStars(this.props.neededStars())[2]}
           </div>
           <div id="averageStars">{this.props.average} out of 5 stars</div>
           <div id="chartContainer">
