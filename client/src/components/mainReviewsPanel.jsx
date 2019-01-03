@@ -48,9 +48,6 @@ class MainReviewsPanel extends React.Component {
           <option value='Top Reviews'>Top Reviews</option>
           <option value='Most Recent'>Most Recent</option>
         </select>
-        {/* {this.props.reviews.map((review) => {
-          return <div><IndividualReview key={review.reviewId} neededStars={this.calculateNeededStarsIndividual(review)} generateStars={this.props.generateStars} review={review}/></div>
-        })} */}
         {displayedReviews}
 
         <div id='seeMoreReviews'>
