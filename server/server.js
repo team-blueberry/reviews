@@ -3,10 +3,12 @@ const morgan = require('morgan');
 const db = require('./db/index.js');
 const reviewsRouter = require('./resources/Product/reviewsRouter.js');
 const path = require('path');
+const compression = require('compression');
 
 const app = express();
 
 app.use(morgan('dev'));
+app.use(compression())
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use('/listing', reviewsRouter)
