@@ -40,7 +40,8 @@ body {
   height: 30px;
   box-sizing: border-box
 }
-#reviewStarContainer img{
+
+#reviewStarContainer img {
   width: 20%;
   height: auto;
   padding-bottom: 5.5px;
@@ -59,7 +60,8 @@ body {
   padding-top: 10px;
   height: 30px;
   font-size: 13px;
-  line-height: 19px
+  line-height: 19px;
+  cursor: pointer;
 }
 
 #averageReviewStarContainer img {
@@ -122,11 +124,13 @@ body {
 .averageReviewsContainer {
   font-family: Arial, sans-serif
 }
+
 #reviewsMedly {
   font-family: Arial, sans-serif;
   overflow: hidden;
   position: relative
 }
+
 #averageRating {
   border-right: 30px;
   float: left;
@@ -199,7 +203,7 @@ body {
   padding-top: 20px;
   padding-left: 360px;
   overflow: hidden;
-  width : 1000px
+  width: 1000px
 }
 
 #filterButton {
@@ -218,11 +222,11 @@ body {
 
 #reviewTitle {
   cursor: pointer;
-  color: rgb(17,17,17);
+  color: rgb(17, 17, 17);
   font-weight: 700;
   font-size: 13px;
   overflow-wrap: break-word;
-  text-decoration-color: rgb(17,17,17);
+  text-decoration-color: rgb(17, 17, 17);
   text-decoration-style: solid;
   font-family: Arial, sans-serif
 }
@@ -246,7 +250,7 @@ body {
   overflow-wrap: break-word;
   font-size: 13px;
   font-family: Arial, sans-serif;
-  color: rgb(17,17,17);
+  color: rgb(17, 17, 17);
   line-height: 19px;
   white-space: normal
 }
@@ -258,7 +262,6 @@ body {
   text-size-adjust: 100%;
   padding-top: 8px;
   padding-bottom: 8px
-
 }
 
 .verticalSeperator {
@@ -267,7 +270,7 @@ body {
   width: 1px;
   background-color: #ddd;
   line-height: 0;
-  height : 14px;
+  height: 14px;
   vertical-align: middle
 }
 
@@ -295,7 +298,7 @@ body {
 }
 
 #fullName {
-  padding-left : 13px
+  padding-left: 13px
 }
 
 #review {
@@ -305,4 +308,15 @@ body {
 
 #reviewImageContainer {
   white-space: normal
+}
+
+#popover-trigger-hover-focus {
+  max-width: 400px;
+  width: 350px;
+}
+
+.modalImage {
+  width: 128px;
+  height: 128px;
+  margin: 5px
 }

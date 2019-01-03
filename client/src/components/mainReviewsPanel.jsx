@@ -1,65 +1,73 @@
-import React from 'react';
+import React from "react";
 
-import IndividualReview from './individualReview.jsx'
-
+import IndividualReview from "./individualReview.jsx";
 
 class MainReviewsPanel extends React.Component {
   constructor(props) {
-    super(props)
-    this.calculateNeededStarsIndividual = this.calculateNeededStarsIndividual.bind(this)
+    super(props);
+    this.calculateNeededStarsIndividual = this.calculateNeededStarsIndividual.bind(
+      this
+    );
   }
 
   calculateNeededStarsIndividual(review) {
-    let filled = Math.floor(review.stars)
-    let decimals = review.stars - filled
-    var halfStars = false
+    let filled = Math.floor(review.stars);
+    let decimals = review.stars - filled;
+    var halfStars = false;
     let empty = 5 - filled;
     if (decimals > 0.5) {
       halfStars = true;
       empty = empty - 1;
     }
-    return [filled, halfStars, empty]
+    return [filled, halfStars, empty];
   }
 
   render() {
-    
     let count = 8;
     if (this.props.reviews.length < 8) {
-      count = this.props.reviews.length
+      count = this.props.reviews.length;
     }
     if (this.props.filtered) {
-      var clearFilterButton = <a href="" id='filterButton' onClick={(e) => this.props.clearFilter(e)}>Clear filter</a>
+      var clearFilterButton = (
+        <a href="" id="filterButton" onClick={e => this.props.clearFilter(e)}>
+          Clear filter
+        </a>
+      );
     } else {
-      var clearFilterButton = <div></div>
+      var clearFilterButton = <div />;
     }
 
     var displayedReviews = [];
     for (var i = 0; i < count; i++) {
-      displayedReviews.push(<div><IndividualReview key={this.props.reviews[i].reviewId} neededStars={this.calculateNeededStarsIndividual(this.props.reviews[i])} generateStars={this.props.generateStars} review={this.props.reviews[i]}/></div>)
+      displayedReviews.push(
+        <div>
+          <IndividualReview
+            key={this.props.reviews[i].reviewId}
+            neededStars={this.calculateNeededStarsIndividual(
+              this.props.reviews[i]
+            )}
+            generateStars={this.props.generateStars}
+            review={this.props.reviews[i]}
+          />
+        </div>
+      );
     }
     return (
       <React.Fragment>
-        <div id='mainReviewsStatic'>
+        <div id="mainReviewsStatic">
           Showing 1-{count} of {this.props.reviews.length} reviews
           {clearFilterButton}
         </div>
 
-        <select onChange={(e) => this.props.handleSelectChange(e)}>
-          <option value='Top Reviews'>Top Reviews</option>
-          <option value='Most Recent'>Most Recent</option>
+        <select onChange={e => this.props.handleSelectChange(e)}>
+          <option value="Top Reviews">Top Reviews</option>
+          <option value="Most Recent">Most Recent</option>
         </select>
-        {/* {this.props.reviews.map((review) => {
-          return <div><IndividualReview key={review.reviewId} neededStars={this.calculateNeededStarsIndividual(review)} generateStars={this.props.generateStars} review={review}/></div>
-        })} */}
         {displayedReviews}
 
-        <div id='seeMoreReviews'>
-          
-        </div>
-
-
+        <div id="seeMoreReviews" />
       </React.Fragment>
-    )
+    );
   }
 }
 

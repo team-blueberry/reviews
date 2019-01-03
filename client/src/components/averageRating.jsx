@@ -1,4 +1,7 @@
 import React from "react";
+import { Popover } from "react-bootstrap";
+import { OverlayTrigger } from "react-bootstrap";
+
 import AverageRatingBarGraph from "./averageRatingBarGraph.jsx";
 
 class AverageRating extends React.Component {
@@ -6,49 +9,6 @@ class AverageRating extends React.Component {
     super(props);
     this.state = {};
   }
-
-  // generateStars() {
-  //   let filledArr = [];
-  //   for (var i = 0; i < this.props.neededStars[0]; i++) {
-  //     filledArr.push(i);
-  //   }
-  //   let filledStars = filledArr.map(num => {
-  //     return (
-  //       <img
-  //         key={num}
-  //         className="star"
-  //         src="https://visualpharm.com/assets/445/Star%20Filled-595b40b65ba036ed117d408e.svg"
-  //         alt=""
-  //       />
-  //     );
-  //   });
-  //   let halfArr;
-  //   if (this.props.neededStars[1] === true) {
-  //     halfArr = (
-  //       <img
-  //         className="star"
-  //         src="https://visualpharm.com/assets/247/Star%20Half-595b40b85ba036ed117dab5e.svg"
-  //         alt=""
-  //       />
-  //     );
-  //   }
-
-  //   let emptyArr = [];
-  //   for (var i = 0; i < this.props.neededStars[2]; i++) {
-  //     emptyArr.push(i);
-  //   }
-  //   let emptyStars = emptyArr.map(num => {
-  //     return (
-  //       <img
-  //         key={num}
-  //         className="star"
-  //         src="https://visualpharm.com/assets/797/Christmas%20Star-595b40b75ba036ed117d58dc.svg"
-  //         alt=""
-  //       />
-  //     );
-  //   });
-  //   return [filledStars, halfArr, emptyStars];
-  // }
 
   roundAllRatings() {
     let roundedRatings = [];
@@ -89,6 +49,16 @@ class AverageRating extends React.Component {
   }
 
   render() {
+    const popoverHoverFocus = (
+      <Popover id="popover-trigger-hover-focus" title="">
+        Amazon calculates a product’s star ratings based on a machine learned
+        model instead of a raw data average. The model takes into account
+        factors including the age of a rating, whether the ratings are from
+        verified purchasers, and factors that establish reviewer
+        trustworthiness.
+      </Popover>
+    );
+
     return (
       <React.Fragment>
         <div className="averageReviewsContainer">
@@ -100,7 +70,14 @@ class AverageRating extends React.Component {
             {this.props.generateStars(this.props.neededStars())[1]}
             {this.props.generateStars(this.props.neededStars())[2]}
           </div>
-          <div id="averageStars">{this.props.average} out of 5 stars</div>
+
+          <OverlayTrigger
+            trigger={["hover", "focus"]}
+            placement="bottom"
+            overlay={popoverHoverFocus}
+          >
+            <div id="averageStars">{this.props.average} out of 5 stars</div>
+          </OverlayTrigger>
           <div id="chartContainer">
             <AverageRatingBarGraph roundedRatings={this.roundAllRatings()} />
           </div>

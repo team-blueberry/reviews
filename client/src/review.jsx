@@ -1,32 +1,32 @@
-import React from 'react';
-import ReactDom from 'react-dom';
-import axios from 'axios';
-import flatten from 'array-flatten';
+import React from "react";
+import ReactDom from "react-dom";
+import axios from "axios";
+import flatten from "array-flatten";
 
-import AverageRating from './components/averageRating.jsx';
-import ImagesViewer from './components/imagesViewer.jsx';
-import WordSearchButton from './components/wordSearchButtons.jsx';
-import MainReviewsPanel from './components/mainReviewsPanel.jsx';
+import AverageRating from "./components/averageRating.jsx";
+import ImagesViewer from "./components/imagesViewer.jsx";
+import WordSearchButton from "./components/wordSearchButtons.jsx";
+import MainReviewsPanel from "./components/mainReviewsPanel.jsx";
 
 class Review extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       reviews: [],
-      average: '',
+      average: "",
       neededStars: [],
       images: [],
-      imagePreview : [],
+      imagePreview: [],
       randomWords: [],
       searchButton: null,
-      filteredReviews : [],
-      sortByHelpful : true,
+      filteredReviews: [],
+      sortByHelpful: true
     };
-    this.handleSearchButton = this.handleSearchButton.bind(this)
-    this.handleSelectChange = this.handleSelectChange.bind(this)
-    this.clearFilter = this.clearFilter.bind(this)
-    this.generateStars = this.generateStars.bind(this)
-    this.calculateNeededStars = this.calculateNeededStars.bind(this)
+    this.handleSearchButton = this.handleSearchButton.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.clearFilter = this.clearFilter.bind(this);
+    this.generateStars = this.generateStars.bind(this);
+    this.calculateNeededStars = this.calculateNeededStars.bind(this);
   }
 
   getReviews(listingNum) {
@@ -36,8 +36,6 @@ class Review extends React.Component {
         this.setState({ reviews: data });
       });
   }
-
-
 
   getAverageStars() {
     let average = (
@@ -50,32 +48,35 @@ class Review extends React.Component {
   getAllImages() {
     let allImages = [];
     this.state.reviews.forEach(review => {
-      if(review.images) {
-        allImages.push(review.images)
+      if (review.images) {
+        allImages.push(review.images);
       }
-    })
+    });
     allImages = flatten(allImages);
-    this.setState({
-      images: allImages
-    }, () => {this.getRandomImages()})
+    this.setState(
+      {
+        images: allImages
+      },
+      () => {
+        this.getRandomImages();
+      }
+    );
   }
 
   getRandomImages() {
     if (this.state.images) {
-      let shuffledImages = this.state.images.sort(() => Math.random() - .5)
-      shuffledImages = shuffledImages.slice(0,4)
+      let shuffledImages = this.state.images.sort(() => Math.random() - 0.5);
+      shuffledImages = shuffledImages.slice(0, 4);
       this.setState({
-        imagePreview : shuffledImages
-      })
+        imagePreview: shuffledImages
+      });
     } else {
-      let temp = []
+      let temp = [];
       this.setState({
         imagePreview: temp
-      })
+      });
     }
   }
-
-
 
   calculateNeededStars() {
     let average = Number(this.state.average);
@@ -91,55 +92,60 @@ class Review extends React.Component {
     //   neededStars: [filled, halfStars, empty]
     // });
 
-    return [filled, halfStars, empty]
+    return [filled, halfStars, empty];
   }
 
   getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
   }
-  
+
   filterReviews() {
-    let filteredReviews = this.state.reviews.filter((review) => {
-      return review.text.includes(this.state.searchButton)
-    })
+    let filteredReviews = this.state.reviews.filter(review => {
+      return review.text.includes(this.state.searchButton);
+    });
     this.setState({
-      filteredReviews : filteredReviews
-    })
+      filteredReviews: filteredReviews
+    });
   }
 
   handleSearchButton(e) {
-    e.preventDefault()
-    let buttonText = e.target.innerHTML
+    e.preventDefault();
+    let buttonText = e.target.innerHTML;
     if (buttonText === this.state.searchButton) {
       this.setState({
         searchButton: null,
-        filteredReviews : []
-      })
+        filteredReviews: []
+      });
     } else {
-      this.setState({
-        searchButton: buttonText
-      }, () => {
-        this.filterReviews()
-      })
+      this.setState(
+        {
+          searchButton: buttonText
+        },
+        () => {
+          this.filterReviews();
+        }
+      );
     }
   }
 
   getRandomWords() {
     let wordsArr = [];
     this.state.reviews.forEach(review => {
-      let strippedText = review.text.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ");
-      let textArr = strippedText.split(' ')
-      let randomNum = this.getRandomIntInclusive(0,textArr.length -1)
-      wordsArr.push(textArr[randomNum])
+      let strippedText = review.text
+        .replace(/[^\w\s]|_/g, "")
+        .replace(/\s+/g, " ");
+      let textArr = strippedText.split(" ");
+      let randomNum = this.getRandomIntInclusive(0, textArr.length - 1);
+      wordsArr.push(textArr[randomNum]);
       textArr.splice(randomNum, 1);
-      randomNum = this.getRandomIntInclusive(0,textArr.length -1)
-      wordsArr.push(textArr[randomNum])
-    })
+      randomNum = this.getRandomIntInclusive(0, textArr.length - 1);
+      wordsArr.push(textArr[randomNum]);
+    });
     this.setState({
-      randomWords : wordsArr
-    })
+      randomWords: wordsArr
+    });
   }
 
   sortByMostHelpful(a, b) {
@@ -155,53 +161,54 @@ class Review extends React.Component {
     return new Date(b.date) - new Date(a.date);
   }
 
-
   sortByChecker() {
-      if (this.state.sortByHelpful) {
-        let temp = this.state.filteredReviews.slice()
-        let temp2 = this.state.reviews.slice()
-        temp.sort(this.sortByMostHelpful) 
-        temp2.sort(this.sortByMostHelpful)
-        this.setState({
-          filteredReviews: temp,
-          reviews : temp2
-        })
-      } else if (this.state.sortByHelpful === false) {
-        let temp = this.state.filteredReviews.slice();
-        let temp2 = this.state.reviews.slice()
-        temp.sort(this.sortByDate)
-        temp2.sort(this.sortByDate)
-        this.setState({
-          filteredReviews: temp,
-          reviews: temp2
-        })
-      }
-
-    
-
+    if (this.state.sortByHelpful) {
+      let temp = this.state.filteredReviews.slice();
+      let temp2 = this.state.reviews.slice();
+      temp.sort(this.sortByMostHelpful);
+      temp2.sort(this.sortByMostHelpful);
+      this.setState({
+        filteredReviews: temp,
+        reviews: temp2
+      });
+    } else if (this.state.sortByHelpful === false) {
+      let temp = this.state.filteredReviews.slice();
+      let temp2 = this.state.reviews.slice();
+      temp.sort(this.sortByDate);
+      temp2.sort(this.sortByDate);
+      this.setState({
+        filteredReviews: temp,
+        reviews: temp2
+      });
+    }
   }
 
   handleSelectChange(e) {
-    if (e.target.value === 'Top Reviews') {
-      this.setState({
-        sortByHelpful : true
-      }, () => {
-        this.sortByChecker()
-      })
+    if (e.target.value === "Top Reviews") {
+      this.setState(
+        {
+          sortByHelpful: true
+        },
+        () => {
+          this.sortByChecker();
+        }
+      );
     } else {
-      this.setState({
-        sortByHelpful : false
-      }, () => {
-        this.sortByChecker()
-      })
+      this.setState(
+        {
+          sortByHelpful: false
+        },
+        () => {
+          this.sortByChecker();
+        }
+      );
     }
   }
 
   clearFilter(e) {
-    e.preventDefault()
-    this.setState({filteredReviews : []})
+    e.preventDefault();
+    this.setState({ filteredReviews: [] });
   }
-
 
   generateStars(starsArr) {
     let filledArr = [];
@@ -246,7 +253,6 @@ class Review extends React.Component {
     return [filledStars, halfArr, emptyStars];
   }
 
-
   componentDidMount() {
     let url = document.URL.substring(23);
     this.getReviews(url)
@@ -254,54 +260,63 @@ class Review extends React.Component {
         this.getAverageStars();
       })
       .then(() => {
-        this.sortByChecker()
-      })
-      // .then(() => {
-      //   this.calculateNeededStars();
-      // })
-      .then(() => {
-        this.getAllImages()
+        this.sortByChecker();
       })
       .then(() => {
-        this.getRandomWords()
+        this.getAllImages();
+      })
+      .then(() => {
+        this.getRandomWords();
       })
       .catch(err => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
 
   render() {
     return (
       <React.Fragment>
-        <div className='divider' id='topDivider'/>
-        <div id='reviewsMedly'>
-          <div id='averageRating'>
-          <AverageRating
-            reviews={this.state.reviews}
-            average={this.state.average}
-            neededStars={this.calculateNeededStars}
-            generateStars={this.generateStars}
-          />
+        <div className="divider" id="topDivider" />
+        <div id="reviewsMedly">
+          <div id="averageRating">
+            <AverageRating
+              reviews={this.state.reviews}
+              average={this.state.average}
+              neededStars={this.calculateNeededStars}
+              generateStars={this.generateStars}
+            />
           </div>
-          <div id='mainReviewsPane'>
-            <div id='imagesViewer'>
-              <ImagesViewer images={this.state.imagePreview}/>
+          <div id="mainReviewsPane">
+            <div id="imagesViewer">
+              <ImagesViewer
+                selectedImages={this.state.imagePreview}
+                allImages={this.state.images}
+              />
             </div>
-            <div id='wordSearchButtons'>
-              <WordSearchButton words={this.state.randomWords} handleSearchButton={this.handleSearchButton}/>
+            <div id="wordSearchButtons">
+              <WordSearchButton
+                words={this.state.randomWords}
+                handleSearchButton={this.handleSearchButton}
+              />
             </div>
-
           </div>
-
-
-          
         </div>
-        <div id='reviewsPanel'>
-          <MainReviewsPanel generateStars={this.generateStars} reviews={this.state.filteredReviews.length ? this.state.filteredReviews : this.state.reviews} filtered={!!this.state.filteredReviews.length} handleSelectChange={this.handleSelectChange} clearFilter={this.clearFilter}/>
+        <div id="reviewsPanel">
+          <MainReviewsPanel
+            generateStars={this.generateStars}
+            reviews={
+              this.state.filteredReviews.length
+                ? this.state.filteredReviews
+                : this.state.reviews
+            }
+            filtered={!!this.state.filteredReviews.length}
+            handleSelectChange={this.handleSelectChange}
+            clearFilter={this.clearFilter}
+          />
         </div>
       </React.Fragment>
     );
   }
 }
 
-ReactDom.render(<Review />, document.getElementById('review'));
+ReactDom.render(<Review />, document.getElementById("review"));
