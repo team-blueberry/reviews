@@ -88,8 +88,8 @@ class AverageRatingBarGraph extends React.Component {
               right: 50
             }
           },
-          tooltips: {enabled: false},
-          hover: {mode: null},      
+          tooltips: { enabled: false },
+          hover: { mode: null },
           plugins: {
             datalabels: {
               anchor: "end",

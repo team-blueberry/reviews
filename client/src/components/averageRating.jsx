@@ -1,15 +1,13 @@
 import React from "react";
-import {Popover} from 'react-bootstrap';
-import {OverlayTrigger} from 'react-bootstrap';
+import { Popover } from "react-bootstrap";
+import { OverlayTrigger } from "react-bootstrap";
 
 import AverageRatingBarGraph from "./averageRatingBarGraph.jsx";
-
 
 class AverageRating extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-
   }
 
   roundAllRatings() {
@@ -40,7 +38,6 @@ class AverageRating extends React.Component {
     return roundedRatingsCounter;
   }
 
-
   toggleButton(e) {
     if (
       document.getElementById("leaveReviewButton").style.borderStyle === "inset"
@@ -52,10 +49,13 @@ class AverageRating extends React.Component {
   }
 
   render() {
-
     const popoverHoverFocus = (
       <Popover id="popover-trigger-hover-focus" title="">
-        Amazon calculates a product’s star ratings based on a machine learned model instead of a raw data average. The model takes into account factors including the age of a rating, whether the ratings are from verified purchasers, and factors that establish reviewer trustworthiness.
+        Amazon calculates a product’s star ratings based on a machine learned
+        model instead of a raw data average. The model takes into account
+        factors including the age of a rating, whether the ratings are from
+        verified purchasers, and factors that establish reviewer
+        trustworthiness.
       </Popover>
     );
 
@@ -70,16 +70,13 @@ class AverageRating extends React.Component {
             {this.props.generateStars(this.props.neededStars())[1]}
             {this.props.generateStars(this.props.neededStars())[2]}
           </div>
-          
-          <OverlayTrigger
-        trigger={['hover', 'focus']}
-        placement="bottom"
-        overlay={popoverHoverFocus}
-          >
-          <div id="averageStars">
-          {this.props.average} out of 5 stars
-          </div>
 
+          <OverlayTrigger
+            trigger={["hover", "focus"]}
+            placement="bottom"
+            overlay={popoverHoverFocus}
+          >
+            <div id="averageStars">{this.props.average} out of 5 stars</div>
           </OverlayTrigger>
           <div id="chartContainer">
             <AverageRatingBarGraph roundedRatings={this.roundAllRatings()} />
