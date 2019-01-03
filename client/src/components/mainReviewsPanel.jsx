@@ -1,4 +1,5 @@
 import React from "react";
+import {Button} from 'react-bootstrap'
 
 import IndividualReview from "./individualReview.jsx";
 
@@ -65,7 +66,16 @@ class MainReviewsPanel extends React.Component {
         </select>
         {displayedReviews}
 
-        <div id="seeMoreReviews" />
+        <div id="seeMoreReviews">
+          <a href='' onClick={(e) => {e.preventDefault()}}>See all {this.props.reviews.length} reviews</a>
+        </div>
+        <div id='writeReviewButton'>
+        <Button
+              bsClass="reviewButton"
+              bsStyle="default"
+              onClick={e => {e.preventDefault()}}
+          > Write a customer review </Button>
+        </div>
       </React.Fragment>
     );
   }
