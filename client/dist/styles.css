@@ -306,3 +306,8 @@ body {
 #reviewImageContainer {
   white-space: normal
 }
+
+#popover-trigger-hover-focus {
+  max-width: 400px;
+  width: 350px;
+}
