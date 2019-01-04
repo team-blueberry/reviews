@@ -276,7 +276,7 @@ class Review extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className='mainReviewComp'>
         <div className="divider" id="topDivider" />
         <div id="reviewsMedly">
           <div id="averageRating">
@@ -315,7 +315,7 @@ class Review extends React.Component {
             clearFilter={this.clearFilter}
           />
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
