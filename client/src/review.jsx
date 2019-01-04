@@ -253,8 +253,9 @@ class Review extends React.Component {
     return [filledStars, halfArr, emptyStars];
   }
 
+
   componentDidMount() {
-    let url = document.URL.substring(58);
+    let url = document.URL.split('?')[1]
     this.getReviews(url)
       .then(() => {
         this.getAverageStars();
