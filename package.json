@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start server/index.js",
     "react-dev": "webpack -p",
-    "build" :  "webpack -p ; pm2 start server/index.js"
+    "build" :  "sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3013; webpack -p ; pm2 delete all ; pm2 start server/index.js"
   },
   "repository": {
     "type": "git",
