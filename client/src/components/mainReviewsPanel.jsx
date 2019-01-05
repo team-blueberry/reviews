@@ -9,9 +9,9 @@ class MainReviewsPanel extends React.Component {
     this.calculateNeededStarsIndividual = this.calculateNeededStarsIndividual.bind(
       this
     );
-    this.state={
-      hideLink : (this.props.reviews.length < 8)
-    }
+    this.state = {
+      hideLink: this.props.reviews.length < 8
+    };
   }
 
   calculateNeededStarsIndividual(review) {

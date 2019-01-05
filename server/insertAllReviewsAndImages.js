@@ -13,11 +13,13 @@ var insertAllReviews = () => {
       if (err) {
         throw err;
       } else {
-        
+
         reviewData = JSON.parse(data);
         reviewData.forEach((review) => {
-          Review.findOneAndUpdate({reviewId: review.reviewId}, {
-            reviewId : review.reviewId,
+          Review.findOneAndUpdate({
+            reviewId: review.reviewId
+          }, {
+            reviewId: review.reviewId,
             stars: review.stars,
             verified: review.verified,
             username: review.username,
@@ -29,7 +31,9 @@ var insertAllReviews = () => {
             date: review.date,
             images: imgObject[review.reviewId.toString()],
             profilepicture: review.profilepicture
-          }, {upsert: true}).exec((err) => {
+          }, {
+            upsert: true
+          }).exec((err) => {
             if (err) {
               console.log(err)
             }
@@ -37,8 +41,8 @@ var insertAllReviews = () => {
         });
       }
     });
-    })
-  
+  })
+
 }
 
 // var insertAllImages = () => {

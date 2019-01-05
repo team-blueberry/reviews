@@ -31,7 +31,9 @@ class Review extends React.Component {
 
   getReviews(listingNum) {
     return axios
-      .get(`http://ec2-13-59-251-226.us-east-2.compute.amazonaws.com:3013/listing/${listingNum}`)
+      .get(
+        `http://ec2-13-59-251-226.us-east-2.compute.amazonaws.com:3013/listing/${listingNum}`
+      )
       .then(({ data }) => {
         this.setState({ reviews: data });
       });
@@ -88,9 +90,6 @@ class Review extends React.Component {
       halfStars = true;
       empty = empty - 1;
     }
-    // this.setState({
-    //   neededStars: [filled, halfStars, empty]
-    // });
 
     return [filled, halfStars, empty];
   }
@@ -253,9 +252,8 @@ class Review extends React.Component {
     return [filledStars, halfArr, emptyStars];
   }
 
-
   componentDidMount() {
-    let url = document.URL.split('?')[1]
+    let url = document.URL.split("?")[1];
     this.getReviews(url)
       .then(() => {
         this.getAverageStars();
@@ -276,7 +274,7 @@ class Review extends React.Component {
 
   render() {
     return (
-      <div className='mainReviewComp'>
+      <div className="mainReviewComp">
         <div className="divider" id="topDivider" />
         <div id="reviewsMedly">
           <div id="averageRating">

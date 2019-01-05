@@ -7,7 +7,9 @@ if (process.env.mongo_uri) {
   mongoUri = ('mongodb://localhost:27017/review')
 }
 
-mongoose.connect(mongoUri, {useNewUrlParser: true}, (err) => {
+mongoose.connect(mongoUri, {
+  useNewUrlParser: true
+}, (err) => {
   if (err) {
     console.log(err);
   } else {
