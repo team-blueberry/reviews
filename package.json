@@ -27,6 +27,7 @@
     "chart.js": "^2.7.3",
     "chartjs-plugin-datalabels": "^0.5.0",
     "compression": "^1.7.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "file-system": "^2.2.2",
     "mongoose": "^5.4.0",
