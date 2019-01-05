@@ -31,7 +31,7 @@ class Review extends React.Component {
 
   getReviews(listingNum) {
     return axios
-      .get(`http://ec2-3-83-149-86.compute-1.amazonaws.com:3013/listing/${listingNum}`)
+      .get(`ec2-13-59-251-226.us-east-2.compute.amazonaws.com:3013/listing/${listingNum}`)
       .then(({ data }) => {
         this.setState({ reviews: data });
       });
