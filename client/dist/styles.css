@@ -283,7 +283,7 @@
 }
 
 #profileInfo {
-  padding-top: 25px;
+  padding-top: 15px;
   padding-bottom: 0
 }
 
@@ -324,4 +324,12 @@
 
 #reviewButton {
   color: grey
+}
+
+#filterSelect {
+  padding-top: 10px
+}
+
+#mainReviewsStatic {
+  padding-bottom: 10px
 }
