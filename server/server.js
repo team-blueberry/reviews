@@ -7,10 +7,6 @@ const compression = require('compression');
 
 const app = express();
 
-
-app.use(morgan('dev'));
-app.use(compression())
-app.use(express.json());
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -19,6 +15,10 @@ app.use((req, res, next) => {
   );
   next();
  });
+app.use(morgan('dev'));
+app.use(compression())
+app.use(express.json());
+
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use('/listing', reviewsRouter)
 
