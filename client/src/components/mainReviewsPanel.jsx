@@ -9,6 +9,9 @@ class MainReviewsPanel extends React.Component {
     this.calculateNeededStarsIndividual = this.calculateNeededStarsIndividual.bind(
       this
     );
+    this.state={
+      hideLink : (this.props.reviews.length < 8)
+    }
   }
 
   calculateNeededStarsIndividual(review) {
@@ -72,6 +75,7 @@ class MainReviewsPanel extends React.Component {
             onClick={e => {
               e.preventDefault();
             }}
+            hidden={this.props.reviews.length < 8}
           >
             See all {this.props.reviews.length} reviews
           </a>

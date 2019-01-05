@@ -8,8 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server",
-    "react-dev": "webpack -d --watch"
+    "start": "pm2 start server/index.js",
+    "react-dev": "webpack -p",
+    "build" :  "webpack -p ; pm2 start server/index.js"
   },
   "repository": {
     "type": "git",
