@@ -9,3 +9,6 @@ config.js
 
 # Mac OS
 .DS_Store
+
+# Temp files
+server/generated-output.txt
