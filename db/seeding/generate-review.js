@@ -1,4 +1,6 @@
-//  Dependencies
+////////////////////////////////////////
+//  Dependencies and Configuration
+
 let casual = require('casual');
 
 //  Source Data
@@ -6,12 +8,8 @@ let profileImages = require(__dirname + '/source-data/profile-images.json');
 let reviewImages = require(__dirname + '/source-data/review-images.json');
 
 //  Module Options and Constants
-let generatorOptions = {
-  REVIEW_COUNT: 100000
-  // REVIEW_COUNT: 10000
-};
-
-let generatorConstants = {
+let config = {
+  REVIEW_COUNT: 100000,
   DATE_RANGE_IN_MONTHS: 3,
   MAX_REVIEW_IMAGES: 7,
   MAX_HELPFUL: 500,
@@ -19,30 +17,79 @@ let generatorConstants = {
 };
 
 //  Module Configuration
-module.exports.setOptionReviewCount = reviewCount => {
-  generatorOptions.REVIEW_COUNT = reviewCount;
+module.exports.setConfig = newConfig => {
+  config = Object.assign(config, newConfig);
 };
 
+module.exports.config = config;
+
+// Review Header for TSV Files
+let reviewHeader = [
+  'reviewId',
+  'date',
+  'helpful',
+  'images ',
+  'name',
+  'pageId',
+  'profilepicture',
+  'stars',
+  'text',
+  'title',
+  'username',
+  'verified'
+];
+
+module.exports.reviewHeader = reviewHeader.join('\t') + '\n';
+
+////////////////////////////////////////
 //  Helper Functions
 
-const getDateInPastMonths = months => {
+const getDate = () => {
   const DAYS_PER_MONTH = 30;
   const UNIX_MILLISECONDS_PER_DAY = 86400000;
 
   let randomMoment = Math.round(
-    Math.random() * months * DAYS_PER_MONTH * UNIX_MILLISECONDS_PER_DAY
+    Math.random() *
+      config.DATE_RANGE_IN_MONTHS *
+      DAYS_PER_MONTH *
+      UNIX_MILLISECONDS_PER_DAY
   );
 
   // Now in unix time
   let now = new Date().getTime();
-  return new Date(now - randomMoment);
+  return new Date(now - randomMoment).toLocaleString().split(',')[0];
 };
 
-const formatDateString = date => {
-  return date.toLocaleString().split(',')[0];
+const getHelpful = () => {
+  Math.round(Math.random() * config.MAX_HELPFUL);
 };
 
-const getRandomStars = () => {
+const getImages = () => {
+  if (Math.random() > 0.25) {
+    return '[]';
+  }
+
+  return JSON.stringify(
+    getRandomElements(
+      reviewImages,
+      1 + Math.floor(Math.random() * config.MAX_REVIEW_IMAGES)
+    )
+  );
+};
+
+const getPageId = () => {
+  return Math.round(Math.random() * config.REVIEW_COUNT);
+};
+
+const getName = () => {
+  return casual.full_name;
+};
+
+const getProfilePicture = () => {
+  return JSON.stringify(getRandomElements(profileImages, 1));
+};
+
+const getStars = () => {
   const MAX_STARS = 5;
   const DECIMAL_PLACES = 1;
   let result = parseFloat(
@@ -69,178 +116,53 @@ const getRandomElements = (array, count) => {
   return result;
 };
 
-const getUserName = name => {
-  name = name.toLowerCase();
-
-  let style = Math.floor(Math.random() * 5);
-
-  if (style === 0) {
-    return name.split(' ').join('-') + Math.floor(Math.random() * 100);
-  }
-
-  if (style === 1) {
-    return name.split(' ').join('') + Math.floor(Math.random() * 1000);
-  }
-
-  if (style === 2) {
-    return name.split(' ').join('.') + Math.floor(Math.random() * 10);
-  }
-
-  if (style === 3) {
-    return name.split(' ')[1];
-  }
-
-  if (style === 4) {
-    return (
-      name.split(' ')[0][0] +
-      name.split(' ')[1] +
-      Math.floor(Math.random() * 10)
-    );
-  }
-};
-
-const getReviewImages = () => {
-  if (Math.random() > .25) {
-    return [];
-  }
-
-  return getRandomElements(
-    reviewImages,
-    1 + Math.floor(Math.random() * generatorConstants.MAX_REVIEW_IMAGES)
-  )
-}
-
-
-//  Generate A Review Using Helper Functions
-
-const getReview = id => {
-  let name = casual.full_name;
-  let username = name.split(' ').join('').toLowerCase;
-
-  return {
-    reviewId: id,
-    date: formatDateString(
-      getDateInPastMonths(generatorConstants.DATE_RANGE_IN_MONTHS)
-    ),
-    helpful: Math.round(Math.random() * MAX_HELPFUL),
-    images: getReviewImages(),
-    name: name,
-    pageId: Math.round(Math.random() * generatorOptions.REVIEW_COUNT),
-    profilepicture: getRandomElements(profileImages, 1),
-    stars: getRandomStars(),
-    text: casual.sentences(
-      1 + Math.round(Math.random() * generatorConstants.MAX_REVIEW_SENTENCES)
-    ),
-    title: casual.title,
-    username: username,
-    verified: Math.random() > 0.5
-  };
-};
-
-const getReviewString = (id, delimiter) => {
-  let name = casual.full_name;
-  let username = name.split(' ').join('').toLowerCase();
-  let content = [
-    // reviewId:
-    id,
-    // date:
-    formatDateString(
-      getDateInPastMonths(generatorConstants.DATE_RANGE_IN_MONTHS)
-    ),
-    // helpful:
-    Math.round(Math.random() * generatorConstants.MAX_HELPFUL),
-    // images :
-    JSON.stringify(getRandomElements(
-      reviewImages,
-      1 + Math.floor(Math.random() * generatorConstants.MAX_REVIEW_IMAGES)
-    )),
-    // name:
-    name,
-    // pageId:
-    Math.round(Math.random() * generatorOptions.REVIEW_COUNT),
-    // profilepicture :
-    JSON.stringify(getRandomElements(profileImages, 1)),
-    // stars:
-    getRandomStars(),
-    // text:
-    casual.sentences(
-      1 + Math.round(Math.random() * generatorConstants.MAX_REVIEW_SENTENCES)
-    ),
-    // title:
-    casual.title,
-    // username:
-    username,
-    // verified:
-    Math.random() > 0.5
-  ];
-  return (
-    content
-      .join(delimiter) + '\n'
+const getText = () => {
+  return casual.sentences(
+    1 + Math.round(Math.random() * config.MAX_REVIEW_SENTENCES)
   );
 };
 
-// Create output tsv file
-let outputPath = __dirname + '/temp/output.tsv';
+const getTitle = () => {
+  return casual.title;
+};
 
-const fs = require('fs');
+const getUsername = fullName => {
+  return fullName
+    .split(' ')
+    .join('')
+    .toLowerCase();
+};
 
-const file = fs.createWriteStream(outputPath);
+const getVerified = () => {
+  return Math.random() > 0.5;
+};
 
-let reviewHeader = [
-  'reviewId',
-   'date',
-   'helpful',
-   'images ',
-   'name',
-   'pageId',
-   'profilepicture',
-   'stars',
-   'text',
-   'title',
-   'username',
-   'verified'
-];
-let reviewHeaderLine = reviewHeader.join('\t') + '\n';
+////////////////////////////////////////
+//  Main Generator Function
 
-// Function addapted from node docs: https://nodejs.org/dist/v5.7.1/docs/api/stream.html#stream_event_drain
-function writeNTimes(n, writer, encoding, callback) {
-  var i = 0;
-  let fullBufferCount = 0;
-  // account for header line in file
-  n += 1;
-  write();
+//  Generate A Review Using Helper Functions
+const getReview = (id, delimiter = '\t') => {
+  let name = getName();
 
-  function write() {
-    var ok = true;
-    let data;
-    do {
-      i += 1;
-      data = getReviewString(i, '\t');
-      if (i === 1) {
-        // first time
-        writer.write(reviewHeaderLine, encoding);
-      }
-      if (i === n) {
-        // last time
-        writer.write(data, encoding, callback);
-      } else {
-        // see if we should continue, or wait
-        // don't pass the callback, because we're not done yet.
-        ok = writer.write(data, encoding);
-      }
-    } while (i < n && ok);
-    if (i < n) {
-      // had to stop early!
-      // write some more once it drains
-      writer.once('drain', write);
-    }
-  }
-}
+  let username = getUsername(name);
 
-// writeNTimes(1000000, file, 'utf8', () => {
-//   console.log('done writing to file');
-// });
+  // reviewId, date, helpful, images, name, pageId, profilePicture, stars, text, title, username, verified
+  let content = [
+    id,
+    getDate(),
+    getHelpful(),
+    getImages(),
+    name,
+    getPageId(),
+    getProfilePicture(),
+    getStars(),
+    getText(),
+    getTitle(),
+    username,
+    getVerified()
+  ];
 
-writeNTimes(10, file, 'ascii', () => {
-  console.log('done writing to file');
-});
+  return content.join(delimiter) + '\n';
+};
+
+module.exports.getReview = getReview;
