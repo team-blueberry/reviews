@@ -11,4 +11,4 @@ config.js
 .DS_Store
 
 # Temp files
-server/generated-output.txt
+db/seeding/temp/*
