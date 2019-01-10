@@ -13,9 +13,9 @@ let generatorOptions = {
 
 let generatorConstants = {
   DATE_RANGE_IN_MONTHS: 3,
-  MAX_REVIEW_IMAGES: 8,
+  MAX_REVIEW_IMAGES: 4,
   MAX_HELPFUL: 500,
-  MAX_REVIEW_SENTENCES: 12
+  MAX_REVIEW_SENTENCES: 5
 };
 
 //  Module Configuration
@@ -173,29 +173,51 @@ const getReviewString = (id, delimiter) => {
   );
 };
 
-//TODO: Move to Mongo specific file
-const mongoose = require('mongoose');
-let reviewSchema = new mongoose.Schema({
-  reviewId: { type: String, unique: true },
-  date: { type: String, required: true },
-  helpful: { type: Number, required: true },
-  images: { type: [String], required: true },
-  name: { type: String, required: true },
-  pageId: { type: Number, required: true },
-  profilepicture: { type: String, required: true },
-  stars: { type: Number, required: true },
-  text: { type: String, required: true },
-  title: { type: String, required: true },
-  username: { type: String, required: true },
-  verified: { type: Boolean, required: true }
-});
-
-let outputPath = './generated-output.txt';
+// Create output tsv file
+let outputPath = './generated-output.tsv';
 
 const fs = require('fs');
 
 const file = fs.createWriteStream(outputPath);
 
-for (var i = 0; i < generatorOptions.REVIEW_COUNT; i++) {
-  file.write(getReviewString(i, '\t'));
+let reviewHeader = ['reviewId', 'date', 'helpful', 'images ', 'name', 'pageId', 'profilepicture', 'stars', 'text', 'title', 'username', 'verified'];
+let reviewHeaderLine = reviewHeader.join('\t') + '\n';
+
+
+function writeNTimes(n, writer, encoding, callback) {
+  var i = 0;
+  let fullBufferCount = 0;
+  // account for header line in file
+  n += 1;
+  write();
+
+  function write() {
+    var ok = true;
+    let data;
+    do {
+      i += 1;
+      data = getReviewString(i, '\t');
+      if (i === 1) {
+        // first time
+        writer.write(reviewHeaderLine, encoding);
+      }
+      if (i === n) {
+        // last time
+        writer.write(data, encoding, callback);
+      } else {
+        // see if we should continue, or wait
+        // don't pass the callback, because we're not done yet.
+        ok = writer.write(data, encoding);
+      }
+    } while (i < n && ok);
+    if (i < n) {
+      // had to stop early!
+      // write some more once it drains
+      writer.once('drain', write);
+    }
+  }
 }
+
+writeNTimes(1000000, file, 'utf8', () => {
+  console.log('done writing to file');
+});
