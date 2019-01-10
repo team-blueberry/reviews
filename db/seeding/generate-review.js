@@ -2,8 +2,8 @@
 let casual = require('casual');
 
 //  Source Data
-let profileImages = require('../data/profile-images.json');
-let reviewImages = require('../data/review-images.json');
+let profileImages = require(__dirname + '/source-data/profile-images.json');
+let reviewImages = require(__dirname + '/source-data/review-images.json');
 
 //  Module Options and Constants
 let generatorOptions = {
@@ -13,7 +13,7 @@ let generatorOptions = {
 
 let generatorConstants = {
   DATE_RANGE_IN_MONTHS: 3,
-  MAX_REVIEW_IMAGES: 4,
+  MAX_REVIEW_IMAGES: 7,
   MAX_HELPFUL: 500,
   MAX_REVIEW_SENTENCES: 5
 };
@@ -45,9 +45,10 @@ const formatDateString = date => {
 const getRandomStars = () => {
   const MAX_STARS = 5;
   const DECIMAL_PLACES = 1;
-  return parseFloat(
+  let result = parseFloat(
     (Math.random() * MAX_STARS).toString().slice(0, 2 + DECIMAL_PLACES)
   );
+  return result;
 };
 
 const getRandomElements = (array, count) => {
@@ -98,12 +99,23 @@ const getUserName = name => {
   }
 };
 
+const getReviewImages = () => {
+  if (Math.random() > .25) {
+    return [];
+  }
+
+  return getRandomElements(
+    reviewImages,
+    1 + Math.floor(Math.random() * generatorConstants.MAX_REVIEW_IMAGES)
+  )
+}
+
+
 //  Generate A Review Using Helper Functions
 
-//TODO: Export and test this function
 const getReview = id => {
   let name = casual.full_name;
-  let username = getUserName(name);
+  let username = name.split(' ').join('').toLowerCase;
 
   return {
     reviewId: id,
@@ -111,10 +123,7 @@ const getReview = id => {
       getDateInPastMonths(generatorConstants.DATE_RANGE_IN_MONTHS)
     ),
     helpful: Math.round(Math.random() * MAX_HELPFUL),
-    images: getRandomElements(
-      reviewImages,
-      1 + Math.floor(Math.random() * generatorConstants.MAX_REVIEW_IMAGES)
-    ),
+    images: getReviewImages(),
     name: name,
     pageId: Math.round(Math.random() * generatorOptions.REVIEW_COUNT),
     profilepicture: getRandomElements(profileImages, 1),
@@ -130,7 +139,7 @@ const getReview = id => {
 
 const getReviewString = (id, delimiter) => {
   let name = casual.full_name;
-  let username = getUserName(name);
+  let username = name.split(' ').join('').toLowerCase();
   let content = [
     // reviewId:
     id,
@@ -141,16 +150,16 @@ const getReviewString = (id, delimiter) => {
     // helpful:
     Math.round(Math.random() * generatorConstants.MAX_HELPFUL),
     // images :
-    getRandomElements(
+    JSON.stringify(getRandomElements(
       reviewImages,
       1 + Math.floor(Math.random() * generatorConstants.MAX_REVIEW_IMAGES)
-    ),
+    )),
     // name:
     name,
     // pageId:
     Math.round(Math.random() * generatorOptions.REVIEW_COUNT),
     // profilepicture :
-    getRandomElements(profileImages, 1),
+    JSON.stringify(getRandomElements(profileImages, 1)),
     // stars:
     getRandomStars(),
     // text:
@@ -166,24 +175,34 @@ const getReviewString = (id, delimiter) => {
   ];
   return (
     content
-      .map(e => {
-        return JSON.stringify(e);
-      })
       .join(delimiter) + '\n'
   );
 };
 
 // Create output tsv file
-let outputPath = './generated-output.tsv';
+let outputPath = __dirname + '/temp/output.tsv';
 
 const fs = require('fs');
 
 const file = fs.createWriteStream(outputPath);
 
-let reviewHeader = ['reviewId', 'date', 'helpful', 'images ', 'name', 'pageId', 'profilepicture', 'stars', 'text', 'title', 'username', 'verified'];
+let reviewHeader = [
+  'reviewId',
+   'date',
+   'helpful',
+   'images ',
+   'name',
+   'pageId',
+   'profilepicture',
+   'stars',
+   'text',
+   'title',
+   'username',
+   'verified'
+];
 let reviewHeaderLine = reviewHeader.join('\t') + '\n';
 
-
+// Function addapted from node docs: https://nodejs.org/dist/v5.7.1/docs/api/stream.html#stream_event_drain
 function writeNTimes(n, writer, encoding, callback) {
   var i = 0;
   let fullBufferCount = 0;
@@ -218,6 +237,10 @@ function writeNTimes(n, writer, encoding, callback) {
   }
 }
 
-writeNTimes(1000000, file, 'utf8', () => {
+// writeNTimes(1000000, file, 'utf8', () => {
+//   console.log('done writing to file');
+// });
+
+writeNTimes(10, file, 'ascii', () => {
   console.log('done writing to file');
 });
