@@ -61,7 +61,7 @@ const getDate = () => {
 };
 
 const getHelpful = () => {
-  Math.round(Math.random() * config.MAX_HELPFUL);
+  return Math.round(Math.random() * config.MAX_HELPFUL);
 };
 
 const getImages = () => {
