@@ -1,19 +1,15 @@
-// Command Arguments:
-
 var args = process.argv.slice(2);
-
-console.log('args:', args);
 
 if (args.length < 4) {
   console.log('Please run with command line arguments:');
-  console.log('output-filename total-entries starting-index entries-per-batch');
+  console.log('fileName totalEntries startingIndex entriesInFile');
   process.exit();
 }
 
-let outputPath = __dirname + '/temp/' + args[0];
+let fileName = args[0];
 let totalEntries = parseInt(args[1]);
 let startingIndex = parseInt(args[2]);
-let entriesPerBatch = parseInt(args[3]);
+let entriesInFile = parseInt(args[3]);
 
 // Dependencies
 const fs = require('fs');
@@ -21,13 +17,12 @@ const fs = require('fs');
 const generator = require(__dirname + '/generate-review.js');
 generator.setConfig({ REVIEW_COUNT: totalEntries });
 
-const file = fs.createWriteStream(outputPath);
-
 // Function addapted from node docs: https://nodejs.org/dist/v5.7.1/docs/api/stream.html#stream_event_drain
-function writeNTimes(n, writer, encoding, callback) {
-  var i = startingIndex;
+let writeEntries = (file, entriesInFile, startingIndex, callback) => {
+  let i = startingIndex;
+  let endingIndex = startingIndex + entriesInFile;
   // Write file header
-  writer.write(generator.reviewHeader, encoding);
+  file.write(generator.reviewHeader, 'utf8');
   write();
 
   function write() {
@@ -35,28 +30,31 @@ function writeNTimes(n, writer, encoding, callback) {
     let data;
     do {
       data = generator.getReview(i, '\t');
-      if (i === n) {
+      if (i === endingIndex) {
         // last time
-        writer.write(data, encoding, callback);
+        file.write(data, 'utf8', callback);
       } else {
         // see if we should continue, or wait
         // don't pass the callback, because we're not done yet.
-        ok = writer.write(data, encoding);
+        ok = file.write(data, 'utf8');
       }
       i += 1;
-    } while (i < n && ok);
-    if (i < n) {
+    } while (i < endingIndex && ok);
+    if (i < endingIndex) {
       // had to stop early!
       // write some more once it drains
-      writer.once('drain', write);
+      file.once('drain', write);
     }
   }
 }
 
-// writeNTimes(1000000, file, 'utf8', () => {
-//   console.log('done writing to file');
-// });
+const createFile = (fileName, startingIndex, entriesInFile, callback) => {
+  const outputPath = __dirname + '/temp/' + fileName;
+  const file = fs.createWriteStream(outputPath);
 
-writeNTimes(entriesPerBatch, file, 'utf8', () => {
-  console.log('done writing to file');
-});
+  writeEntries(file, entriesInFile, startingIndex, callback = () => {
+    console.log('done writing: ' + fileName);
+  });
+}
+
+createFile(fileName, startingIndex, entriesInFile);
