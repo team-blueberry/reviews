@@ -28,7 +28,7 @@ let reviewHeader = [
   'reviewId',
   'date',
   'helpful',
-  'images ',
+  'images',
   'name',
   'pageId',
   'profilepicture',
