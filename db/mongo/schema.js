@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-module.exports.reviewSchema = new mongoose.Schema({
+const reviewSchema = new mongoose.Schema({
   reviewId: { type: String, unique: true },
   date: { type: String, required: true },
   helpful: { type: Number, required: true },
-  images: { type: [String], required: true },
+  images: { type: String, required: true },
   name: { type: String, required: true },
   pageId: { type: Number, required: true },
   profilepicture: { type: String, required: true },
@@ -14,3 +14,9 @@ module.exports.reviewSchema = new mongoose.Schema({
   username: { type: String, required: true },
   verified: { type: Boolean, required: true }
 });
+
+const Review = mongoose.model('reviews', reviewSchema);
+
+module.exports.reviewSchema = reviewSchema;
+
+module.exports.Review = Review;
