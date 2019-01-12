@@ -10,17 +10,15 @@ const dbName = 'newReviews';
 const client = new MongoClient(url, { useNewUrlParser: true });
 
 // Use connect method to connect to the Server
-client.connect((err) => {
-  if (err) {
-    console.log('Error connecting to database');
-    process.exit();
-  }
-  console.log("Sucessfully connected to database");
-  module.exports.db = client.db(dbName);
-  module.exports.client = client;
+module.exports.db = new Promise((resolve, reject) => {
+  client.connect(err => {
+    if (err) {
+      console.log('Error connecting to database');
+      reject();
+    }
+    console.log('Sucessfully connected to database');
+    resolve(client.db(dbName));
+  });
 });
 
-
-
-
-
+module.exports.client = client;
