@@ -1,0 +1,13 @@
+{
+  "postgres": {
+    "USER": "",
+    "HOST": "",
+    "DATABASE": "",
+    "PASSWORD": "",
+    "PORT": 1234
+  },
+  "mongo": {
+    "HOST": "",
+    "DATABASE": ""
+  }
+}

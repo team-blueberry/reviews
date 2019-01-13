@@ -5,13 +5,11 @@ node_modules
 client/dist/bundle.js
 
 # Configuraiton Files
-config.js
-
-# Mac OS
-.DS_Store
+config.json
 
 # Temp files
 db/seeding/temp/*
 
 # Misc
 .vscode/
+.DS_Store
