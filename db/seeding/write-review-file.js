@@ -52,9 +52,9 @@ const createFile = (fileName, startingIndex, entriesInFile, callback) => {
   const outputPath = __dirname + '/temp/' + fileName;
   const file = fs.createWriteStream(outputPath);
 
-  writeEntries(file, entriesInFile, startingIndex, callback = () => {
-    console.log('done writing: ' + fileName);
-  });
+  writeEntries(file, entriesInFile, startingIndex, callback);
 }
 
-createFile(fileName, startingIndex, entriesInFile);
+createFile(fileName, startingIndex, entriesInFile, () => {
+  console.log('done writing: ' + fileName);
+});
