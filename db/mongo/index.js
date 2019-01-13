@@ -8,12 +8,14 @@ const db = {};
 //  Import ORM and connect to db
 
 const mongoose = require('mongoose');
-
-mongoose.Promise = Promise;
+const config = require('../../config.json');
 
 mongoose.connect(
-  'mongodb://localhost/reviews',
-  { useNewUrlParser: true }
+  `mongodb://${config.mongo.HOST}/${config.mongo.DATABASE}`,
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true
+  }
 );
 
 db.connection = mongoose.connection;
@@ -34,6 +36,11 @@ db.reviewSchema = reviewSchema;
 // Define controller functions
 db.getByPageId = pageId => {
   return Review.find({ pageId: pageId }).exec();
+};
+
+// Define controller functions
+db.disconnect = () => {
+  mongoose.connection.close();
 };
 
 module.exports = db;
