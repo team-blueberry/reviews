@@ -12,3 +12,6 @@ config.js
 
 # Temp files
 db/seeding/temp/*
+
+# Misc
+.vscode/
