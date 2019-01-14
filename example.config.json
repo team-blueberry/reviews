@@ -4,7 +4,7 @@
     "HOST": "",
     "DATABASE": "",
     "PASSWORD": "",
-    "PORT": 1234
+    "PORT": 5432
   },
   "mongo": {
     "HOST": "",
