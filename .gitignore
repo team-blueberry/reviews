@@ -5,7 +5,7 @@ node_modules
 client/dist/bundle.js
 
 # Configuraiton Files
-config.json
+config.*
 
 # Temp files
 db/seeding/temp/*
