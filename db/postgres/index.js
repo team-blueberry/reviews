@@ -5,9 +5,23 @@ const pool = new Pool({
   user: config.postgres.USER,
   password: config.postgres.PASSWORD,
   host: config.postgres.HOST,
-  database: "reviews",
+  database: config.postgres.DATABASE,
   port: config.postgres.PORT
 });
+
+pool.connect((err, client, release) => {
+  if (err) {
+    return console.error('Error acquiring client', err.stack);
+  }
+  client.query('SELECT NOW()', (err, result) => {
+    release()
+    if (err) {
+      return console.error('Error executing query', err.stack);
+    }
+    console.log('Sucessfully connected to database at:', result.rows);
+  })
+})
+
 
 const db = {};
 
