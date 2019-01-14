@@ -78,7 +78,7 @@ const getImages = () => {
 };
 
 const getPageId = () => {
-  return Math.round(Math.random() * config.REVIEW_COUNT);
+  return Math.floor(Math.random() * config.REVIEW_COUNT);
 };
 
 const getName = () => {
@@ -118,7 +118,7 @@ const getRandomElements = (array, count) => {
 
 const getText = () => {
   return casual.sentences(
-    1 + Math.round(Math.random() * config.MAX_REVIEW_SENTENCES)
+    1 + Math.floor(Math.random() * config.MAX_REVIEW_SENTENCES)
   );
 };
 
