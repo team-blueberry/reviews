@@ -2,12 +2,12 @@ var args = process.argv.slice(2);
 
 if (args.length < 4) {
   console.log('Please run with command line arguments:');
-  console.log('fileName totalEntries startingIndex entriesInFile');
+  console.log('fileName totalPages startingIndex entriesInFile');
   process.exit();
 }
 
 let fileName = args[0];
-let totalEntries = parseInt(args[1]);
+let totalPages = parseInt(args[1]);
 let startingIndex = parseInt(args[2]);
 let entriesInFile = parseInt(args[3]);
 
@@ -15,7 +15,7 @@ let entriesInFile = parseInt(args[3]);
 const fs = require('fs');
 
 const generator = require(__dirname + '/generate-review.js');
-generator.setConfig({ REVIEW_COUNT: totalEntries });
+generator.setConfig({ REVIEW_COUNT: totalPages });
 
 // Function addapted from node docs: https://nodejs.org/dist/v5.7.1/docs/api/stream.html#stream_event_drain
 let writeEntries = (file, entriesInFile, startingIndex, callback) => {
