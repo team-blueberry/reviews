@@ -3,7 +3,7 @@ const path = require('path');
 
 const tsvWriter = path.join(__dirname, 'write-review-file.js');
 
-const PAGES = 1e6;
+const PAGES = 10e6;
 const REVIEWS = 70e6;
 const BATCH_COUNT = 7;
 
