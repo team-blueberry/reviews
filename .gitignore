@@ -13,3 +13,4 @@ db/seeding/temp/*
 # Misc
 .vscode/
 .DS_Store
+scratch.txt
