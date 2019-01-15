@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-const db = require('./db/index.js');
+const db = require('../db/postgres/index.js');
 const reviewsRouter = require('./resources/Product/reviewsRouter.js');
 const path = require('path');
 const compression = require('compression');
