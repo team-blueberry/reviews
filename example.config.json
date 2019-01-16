@@ -1,13 +1,15 @@
 {
   "postgres": {
     "USER": "",
-    "HOST": "",
-    "DATABASE": "",
     "PASSWORD": "",
+    "ADMIN": "",
+    "ADMIN_PASSWORD": "",
+    "HOST": "",
+    "DATABASE": "reviews",
     "PORT": 5432
   },
   "mongo": {
     "HOST": "",
-    "DATABASE": ""
+    "DATABASE": "reviews"
   }
 }
