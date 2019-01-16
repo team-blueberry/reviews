@@ -15,13 +15,14 @@ let entriesInFile = parseInt(args[3]);
 const fs = require('fs');
 const ProgressBar = require('progress');
 
-var bar = new ProgressBar('  writing [:bar] :percent :etas', {
+var bar = new ProgressBar('  writing [:bar] :percent eta::etas elapsed::elapseds', {
   complete: '=',
   incomplete: ' ',
   width: 20,
   total: entriesInFile,
-  // clear: false,
-  stream: process.stdout
+  clear: false,
+  stream: process.stdout,
+  renderThrottle: 500
 });
 
 const generator = require(__dirname + '/generate-review.js');
