@@ -1,8 +1,6 @@
 const { Pool, Client } = require('pg');
 require('dotenv').config()
 
-console.log('env variables:', process.env)
-
 const pool = new Pool({
   user: process.env.PG_USER,
   password: process.env.PG_PASSWORD,
