@@ -1,0 +1,18 @@
+# Dependencies
+node_modules
+npm-debug.log
+
+# Webpack
+client/dist/bundle.js
+
+# Configuration Files
+config.*
+.env
+
+# Temp files
+db/seeding/temp/*
+
+# Misc
+.vscode/
+.DS_Store
+scratch.txt
