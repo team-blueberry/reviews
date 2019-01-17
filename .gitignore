@@ -4,8 +4,9 @@ node_modules
 # Webpack
 client/dist/bundle.js
 
-# Configuraiton Files
+# Configuration Files
 config.*
+.env
 
 # Temp files
 db/seeding/temp/*
