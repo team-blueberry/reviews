@@ -1,12 +1,14 @@
 const { Pool, Client } = require('pg');
-const config = require('../../config.json');
+require('dotenv').config()
+
+console.log('env variables:', process.env)
 
 const pool = new Pool({
-  user: config.postgres.USER,
-  password: config.postgres.PASSWORD,
-  host: config.postgres.HOST,
-  database: config.postgres.DATABASE,
-  port: config.postgres.PORT
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  port: process.env.PG_PORT
 });
 
 pool.connect((err, client, release) => {
