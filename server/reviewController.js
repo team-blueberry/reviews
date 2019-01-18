@@ -1,4 +1,4 @@
-const db = require('../../../db/postgres/index.js');
+const db = require('../db/postgres/index.js');
 
 module.exports.retrieveOne = (req, res) => {
   let reviewNum = parseInt(req.params.number);
