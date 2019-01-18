@@ -33,7 +33,7 @@ class Review extends React.Component {
   getReviews(listingNum) {
     return axios
       .get(
-        `/listing/${listingNum}`
+        `/api/reviews/${listingNum}`
       )
       .then(({ data }) => {
         data.map((e) => {
@@ -259,8 +259,8 @@ class Review extends React.Component {
   }
 
   componentDidMount() {
-    let url = document.URL.split("?")[1];
-    this.getReviews(url)
+    let id = document.location.pathname.match(/\d+/g);
+    this.getReviews(id)
       .then(() => {
         this.getAverageStars();
       })
