@@ -6,7 +6,7 @@ client/dist/bundle.js
 
 # Configuration Files
 config.*
-.env
+.env*
 
 # Temp files
 db/seeding/temp/*
@@ -15,3 +15,7 @@ db/seeding/temp/*
 .vscode/
 .DS_Store
 scratch.txt
+
+# Test Results
+/test/load-testing/static-endpoint/results
+/test/load-testing/api-endpoint/results
