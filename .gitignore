@@ -6,7 +6,7 @@ client/dist/bundle.js
 
 # Configuration Files
 config.*
-.env
+.env*
 
 # Temp files
 db/seeding/temp/*
