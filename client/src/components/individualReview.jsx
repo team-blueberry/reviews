@@ -48,7 +48,7 @@ class IndividualReview extends React.Component {
           <div id="reviewHeader">
             <div id="profileInfo">
               <img
-                src={`${this.props.review.profilepicture}${Math.random()}`}
+                src={`${this.props.review.profilepicture}`}
               />
               <span id="fullName">{this.props.review.name}</span>
             </div>

@@ -7,6 +7,7 @@ import AverageRating from "./components/averageRating.jsx";
 import ImagesViewer from "./components/imagesViewer.jsx";
 import WordSearchButton from "./components/wordSearchButtons.jsx";
 import MainReviewsPanel from "./components/mainReviewsPanel.jsx";
+import { timingSafeEqual } from "crypto";
 
 class Review extends React.Component {
   constructor(props) {
@@ -32,9 +33,14 @@ class Review extends React.Component {
   getReviews(listingNum) {
     return axios
       .get(
-        `http://ec2-13-59-251-226.us-east-2.compute.amazonaws.com:3013/listing/${listingNum}`
+        `/api/reviews/${listingNum}`
       )
       .then(({ data }) => {
+        data.map((e) => {
+          e.images = JSON.parse(e.images);
+          e.profilepicture = JSON.parse(e.profilepicture);
+          return e;
+        })
         this.setState({ reviews: data });
       });
   }
@@ -253,8 +259,8 @@ class Review extends React.Component {
   }
 
   componentDidMount() {
-    let url = document.URL.split("?")[1];
-    this.getReviews(url)
+    let id = document.location.pathname.match(/\d+/g);
+    this.getReviews(id)
       .then(() => {
         this.getAverageStars();
       })

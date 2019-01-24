@@ -1,22 +1,22 @@
 const { Pool, Client } = require('pg');
-const config = require('../../config.json');
+process.env.PRODUCTION || require('dotenv').config();
 
 const pool = new Pool({
-  user: config.postgres.USER,
-  password: config.postgres.PASSWORD,
-  host: config.postgres.HOST,
-  database: config.postgres.DATABASE,
-  port: config.postgres.PORT
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  port: process.env.PG_PORT
 });
 
 pool.connect((err, client, release) => {
   if (err) {
-    return console.error('Error acquiring client', err.stack);
+    return console.error('Error conecting to database:', err.stack);
   }
   client.query('SELECT NOW()', (err, result) => {
     release()
     if (err) {
-      return console.error('Error executing query', err.stack);
+      return console.error('Error executing initial database query', err.stack);
     }
     console.log('Sucessfully connected to database at:', result.rows);
   })
