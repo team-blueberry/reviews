@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start server/index.js",
-    "react-dev": "webpack -p",
+    "start-dev": "nodemon server/index.js",
+    "react-dev": "webpack -d --watch",
     "build": "sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3013; webpack -p ; pm2 delete all ; pm2 start server/index.js"
   },
   "repository": {
@@ -31,10 +32,11 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "file-system": "^2.2.2",
-    "mongoose": "^5.4.0",
+    "mongoose": "^5.4.3",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.9",
     "path": "^0.12.7",
+    "pg": "^7.8.0",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
     "react-chartjs-2": "^2.7.4",
@@ -48,6 +50,8 @@
     "casual": "^1.5.19",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
+    "pretty-hrtime": "^1.0.3",
+    "progress": "^2.0.3",
     "sinon": "^7.2.2",
     "webpack": "^4.28.1",
     "webpack-cli": "^3.1.2"
