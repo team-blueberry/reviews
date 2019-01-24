@@ -41,6 +41,7 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
+    "artillery": "^1.6.0-26",
     "babel-loader": "^8.0.4",
     "casual": "^1.5.19",
     "chai": "^4.2.0",
