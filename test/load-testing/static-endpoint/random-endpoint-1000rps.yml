@@ -8,5 +8,6 @@ scenarios:
   - flow:
     - function: "generateRandomEndpoint"
     - get:
-        url: "{{ endpoint }}"
-    # - log: "Sent a request to {{ endpoint }}"
+        url: "{{ htmlEndpoint }}"
+    - get:
+        url: "{{ bundleEndpoint }}"
