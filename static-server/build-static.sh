@@ -5,12 +5,20 @@
 # nginx. Files are precompressed to make use the nginx
 # ngx_http_gzip_static_module.
 
+# Run script relative to current directory
 script_dir=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-
 cd $script_dir
 
+# Create webpack production build
+webpack -p
+
+# Clear previously served files
 rm ./static/*
 
 cp ../client/dist/* ./static
 
-gzip -k ./static/*
+# Minify CSS
+uglifycss ../client/dist/styles.css > static/styles.css
+
+# Run gzip at max compression level and keep original files
+gzip -k --best ./static/*
