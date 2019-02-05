@@ -2,7 +2,7 @@
 node_modules
 
 # Webpack
-client/dist/bundle.js
+client/dist/
 
 # Configuration Files
 config.*

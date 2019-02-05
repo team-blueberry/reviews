@@ -3,7 +3,7 @@ node_modules
 npm-debug.log
 
 # Webpack
-client/dist/bundle.js
+client/dist/
 
 # Configuration Files
 config.*
