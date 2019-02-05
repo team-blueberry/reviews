@@ -1,3 +1,6 @@
+// Benchmarking
+require('newrelic');
+
 // Dependencies
 const express = require('express');
 const morgan = require('morgan');

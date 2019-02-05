@@ -23,3 +23,7 @@ scratch.txt
 
 # Files to be distributed with static server
 /static-server/static/*
+
+# Benchmarking
+newrelic.js
+newrelic_agent.log

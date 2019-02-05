@@ -16,3 +16,8 @@ db/seeding/temp/*
 .vscode/
 .DS_Store
 scratch.txt
+documentation/
+
+# Benchmarking
+newrelic.js
+newrelic_agent.log
