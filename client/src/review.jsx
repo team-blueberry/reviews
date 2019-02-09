@@ -7,7 +7,6 @@ import AverageRating from "./components/averageRating.jsx";
 import ImagesViewer from "./components/imagesViewer.jsx";
 import WordSearchButton from "./components/wordSearchButtons.jsx";
 import MainReviewsPanel from "./components/mainReviewsPanel.jsx";
-import { timingSafeEqual } from "crypto";
 
 class Review extends React.Component {
   constructor(props) {

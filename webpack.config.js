@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 const CompressionPlugin = require('compression-webpack-plugin');
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -22,6 +24,10 @@ module.exports = {
             presets: ['@babel/preset-react', '@babel/preset-env']
           }
         }
+      },
+      {
+        test: /\.js$/,
+        exclude: [/node_modules\/moment\/*/]
       },
       {
         test: /\.css$/,
@@ -51,6 +57,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     new HtmlWebpackPlugin({
       template: __dirname + '/client/src/index.html'
     }),
