@@ -17,7 +17,3 @@ db/seeding/temp/*
 .DS_Store
 scratch.txt
 documentation/
-
-# Benchmarking
-newrelic.js
-newrelic_agent.log
