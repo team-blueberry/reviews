@@ -5,9 +5,13 @@ npm-debug.log
 # Webpack
 client/dist/
 
+# Load balancer
+load-balancer/
+
 # Configuration Files
 config.*
 .env
+load-balancer/nginx.conf
 
 # Temp files
 db/seeding/temp/*

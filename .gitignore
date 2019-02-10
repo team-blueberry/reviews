@@ -7,6 +7,7 @@ client/dist/
 # Configuration Files
 config.*
 .env*
+load-balancer/nginx.conf
 
 # Temp files
 db/seeding/temp/*
