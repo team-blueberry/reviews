@@ -3,11 +3,15 @@ node_modules
 npm-debug.log
 
 # Webpack
-client/dist/bundle.js
+client/dist/
+
+# Load balancer
+load-balancer/
 
 # Configuration Files
 config.*
 .env
+load-balancer/nginx.conf
 
 # Temp files
 db/seeding/temp/*
@@ -16,3 +20,4 @@ db/seeding/temp/*
 .vscode/
 .DS_Store
 scratch.txt
+documentation/

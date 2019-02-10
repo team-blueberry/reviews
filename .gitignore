@@ -2,11 +2,12 @@
 node_modules
 
 # Webpack
-client/dist/bundle.js
+client/dist/
 
 # Configuration Files
 config.*
 .env*
+load-balancer/nginx.conf
 
 # Temp files
 db/seeding/temp/*
@@ -15,3 +16,11 @@ db/seeding/temp/*
 .vscode/
 .DS_Store
 scratch.txt
+
+# Test Results
+/test/load-testing/static-endpoint/results
+/test/load-testing/api-endpoint/results
+/test/load-testing/static-nginx/results
+
+# Files to be distributed with static server
+/static-server/static/*
