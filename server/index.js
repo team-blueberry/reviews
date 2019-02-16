@@ -23,16 +23,20 @@ const filterApiRequests = (req, res) => {
 const port = process.env.PORT || 3013;
 
 const app = express();
+app.disable('x-powered-by');
 
 app.use(morgan('dev'));
 app.use(compression({ filter: filterApiRequests }));
 
+// HTTP Cache Control Constants
+const ONE_DAY = 86400000;
+
 // Client Endpoints
 app.use(
   '/:id(\\d+)/',
-  expressStaticGzip(path.join(__dirname, '../client/dist'))
+  expressStaticGzip(path.join(__dirname, '../client/dist'), { maxAge: ONE_DAY })
 );
-app.use('/', expressStaticGzip(path.join(__dirname, '../client/dist')));
+app.use('/', expressStaticGzip(path.join(__dirname, '../client/dist'), { maxAge: ONE_DAY }));
 
 // API Endpoints
 app.use('/api/reviews/:number', reviewController.retrieveOne);
