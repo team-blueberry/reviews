@@ -3,9 +3,19 @@
 
 ![component-screen-capture](documentation/front-end-experience.gif)
 
-
+![component-screen-capture](documentation/load-test-screen-capture.gif)
 
 This repository extends a colleague's retail product reviews component to perform at production scale - both by creating and efficently quering database entries for 10 Million simulated product listings and by creating a system architecture to handle hundreds of page requests per second.
+
+Challenges in this project included: 
+
+- Database Selection and Query Benchmarking
+- Generating 70M Mock Database Entries
+- Creating A Scalable Architecture with Docker and Nginx
+- Serving Static Files Effectively
+- Simulating Production Scale
+
+For a comprehensive write-up of the project, please visit: <https://jaredellison.net/projects/retail-page-production-scale> 
 
 ## Key Tools
 
@@ -21,29 +31,6 @@ This repository extends a colleague's retail product reviews component to perfor
   - [s-tui](https://github.com/amanusk/s-tui) Terminal based CPU stress and monitoring utility
   - [htop](https://github.com/hishamhm/htop) Terminal based process viewer
   - [node.js with chrome debugger](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27) For node.js profiling
-
-## Simulating Production Scale
-
-- [Database Selection and Query Benchmarking](#database-selection-and-query-benchmarking)
-- Generating 70M Mock Database Entries
-- Creating A Scalable Architecture with Docker and Nginx
-- Serving Static Files Effectively
-
-### Database Selection and Query Benchmarking
-
-
-
-### Generating 70M Mock Database Entries
-
-
-
-### Creating A Scalable Architecture with Docker and Nginx
-
-
-
-### Serving Static Files Effectively
-
-
 
 ## Authors
 
