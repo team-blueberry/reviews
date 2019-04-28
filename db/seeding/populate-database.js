@@ -1,6 +1,5 @@
 const cp = require('child_process');
 const path = require('path');
-const config = require('../../config.json');
 
 const tsvWriter = path.join(__dirname, 'write-review-file.js');
 
@@ -14,8 +13,6 @@ const TABLE = 'reviews';
 let reviewsPerBatch = REVIEWS / BATCH_COUNT;
 
 console.log(`Clearing table reviews`);
-
-process.env.PGPASSWORD = config.postgres.ADMIN_PASSWORD;
 
 cp.execSync(
   `psql -U postgres -d ${DATABASE} -c "DROP TABLE IF EXISTS ${TABLE};"`
