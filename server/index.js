@@ -5,6 +5,9 @@ const path = require('path');
 const compression = require('compression');
 const expressStaticGzip = require('express-static-gzip');
 
+// Environment variable to toggle load testing endpoint
+const LOADTEST = process.env.LOADTEST;
+
 // Controller Functions
 const reviewController = require('./reviewController.js');
 
@@ -46,9 +49,11 @@ app.get('/api/reviews/:number', reviewController.retrieveOne);
 // endpoint beginning with loaderio- that ends with a hash related to the
 // server's IP. This route responds to those requests with text that represents
 // that endpoint.
-app.get('/loaderio-(*)/', (req, res) => {
-  res.send(req.url.replace('/','').replace('.txt','').replace('.html',''));
-})
+if (LOADTEST) {
+  app.get('/loaderio-(*)/', (req, res) => {
+    res.send(req.url.replace('/','').replace('.txt','').replace('.html',''));
+  })
+}
 
 app.listen(port, () => {
   console.log(`Reviews component server listing on port# ${port}`);
